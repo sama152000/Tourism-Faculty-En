@@ -1,7 +1,6 @@
-# TODO: Install Bootstrap and PrimeNG, Inject Packages, and Apply Aura Theme
+# TODO: Replace PrimeNG with HTML and CSS in Departments Component
 
-## Steps to Complete
-- [x] Install Bootstrap, PrimeNG, PrimeIcons, and Angular Animations packages via npm
-- [x] Update angular.json to include Bootstrap CSS, PrimeNG Aura theme, and PrimeIcons
-- [ ] Update app.config.ts to configure PrimeNG and animations
-- [ ] Verify the setup by checking for any errors and ensuring styles are applied
+## Tasks
+- [x] Update departments.component.ts: Remove PrimeNG imports and update imports array
+- [x] Update departments.component.html: Replace PrimeNG tabs, cards, chips, and divider with HTML equivalents
+- [x] Update departments.component.css: Add styles for custom elements and remove PrimeNG-specific styles

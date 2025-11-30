@@ -2,10 +2,13 @@ import { Component, HostListener } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from "@angular/router";
+import { HeaderComponent } from "./core/features/Faculty-of-tourism/Pages/shared/header/header.component";
+import { FooterComponent } from "./core/features/Faculty-of-tourism/Pages/shared/footer/footer.component";
+import { QuickSidebarComponent } from "./core/features/Faculty-of-tourism/Pages/shared/quick-sidebar/quick-sidebar.component";
 
 @Component({
   selector: 'app-root',
-  imports: [ButtonModule, CommonModule, RouterModule],
+  imports: [ButtonModule, CommonModule, RouterModule, HeaderComponent, FooterComponent, QuickSidebarComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
