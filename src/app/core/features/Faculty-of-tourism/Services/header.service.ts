@@ -5,6 +5,7 @@ import { DepartmentTabsService } from './department-tabs.service';
 import { SectorsService } from './sectors.service';
 import { ServicesService } from './services.service';
 import { UnitsService } from './units.service';
+import { ContentService } from './content.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class HeaderService {
     private departmentTabsService: DepartmentTabsService,
     private sectorsService: SectorsService,
     private servicesService: ServicesService,
-    private unitsService: UnitsService
+    private unitsService: UnitsService,
+    private contentService: ContentService
   ) {}
 
   getHeaderData(): HeaderData {
@@ -25,6 +27,7 @@ export class HeaderService {
     const sectors = this.sectorsService.getSectors();
     const services = this.servicesService.getServices();
     const units = this.unitsService.getUnits();
+    const contentCategories = this.contentService.getContentCategories();
 
     return {
       logo: './assets/tour-logo.jpg',
@@ -65,12 +68,12 @@ export class HeaderService {
         {
           id: '4',
           label: 'News',
-          items: [
-            { id: '4-1', label: 'News', routerLink: '/news' },
-            { id: '4-2', label: 'Articles', routerLink: '/articles' },
-            { id: '4-2', label: 'Events', routerLink: '/events' },
-            { id: '4-3', label: 'Announcements', routerLink: '/announcements' }
-          ]
+          items: contentCategories.map(category => ({
+            id: `4-${category.id}`,
+            label: category.label,
+            routerLink: '/news-list',
+            queryParams: { category: category.id }
+          }))
         },
         {
           id: '5',

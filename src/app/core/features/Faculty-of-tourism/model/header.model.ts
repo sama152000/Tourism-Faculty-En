@@ -13,6 +13,7 @@ export interface MenuItem {
   routerLink?: string;
   url?: string;
   icon?: string;
+  queryParams?: {[k: string]: any};
   items?: MenuItem[];
 }
 
