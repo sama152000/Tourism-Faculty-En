@@ -46,8 +46,8 @@
             </span>
           </div>
           
-          <a 
-            [href]="department.link"
+          <a
+            [routerLink]="['/departments', department.id]"
             class="learn-more-btn faculty-btn faculty-btn-outline mt-auto"
           >
             Learn More
@@ -58,15 +58,7 @@
       </div>
     </div>
 
-    <!-- Call to Action -->
-    <div class="departments-cta text-center mt-5">
-      <h3 class="cta-title">Ready to Start Your Journey?</h3>
-      <p class="cta-text">Join one of our prestigious departments and build your career in tourism and hospitality.</p>
-      <a href="/admissions" class="cta-button faculty-btn faculty-btn-primary">
-        Apply Now
-        <i class="pi pi-external-link ml-2"></i>
-      </a>
-    </div>
+   
     
   </div>
 </section>

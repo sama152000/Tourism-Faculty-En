@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DepartmentsService } from '../../../Services/departments.service';
+import { RouterModule } from '@angular/router';
+import { DepartmentTabsService } from '../../../Services/department-tabs.service';
 import { DepartmentsData } from '../../../model/departments.model';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+import { DepartmentsService } from '../../../Services/departments.service';
 
 @Component({
   selector: 'app-departments',
   standalone: true,
-  imports: [CommonModule, CardModule, ButtonModule],
+  imports: [CommonModule, RouterModule, CardModule, ButtonModule],
   templateUrl: './departments.component.html',
   styleUrls: ['./departments.component.css']
 })
@@ -18,7 +20,11 @@ export class DepartmentsComponent implements OnInit {
   constructor(private departmentsService: DepartmentsService) {}
 
   ngOnInit(): void {
-    this.departmentsData = this.departmentsService.getDepartmentsData();
+    const data = this.departmentsService.getDepartmentsData();
+    this.departmentsData = {
+      ...data,
+      departments: data.departments.slice(0, 3)
+    };
   }
 
   getDeptFeatures(deptId: string): string[] {

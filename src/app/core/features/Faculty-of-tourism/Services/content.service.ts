@@ -21,7 +21,7 @@ export class ContentService {
       The seminar included interactive workshops where participants explored case studies from successful sustainable tourism projects worldwide. Students presented their own research on local conservation efforts and proposed innovative solutions for Egypt's tourism industry.
 
       The event concluded with a panel discussion featuring representatives from leading eco-resorts and sustainable tourism organizations, providing valuable networking opportunities for students and faculty members alike.`,
-      image: 'https://images.pexels.com/photos/2373201/pexels-photo-2373201.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: './assets/tour1.jpg',
       date: new Date('2025-01-15'),
       category: 'news',
       link: '/news-details/1'
@@ -39,7 +39,7 @@ export class ContentService {
       "This workshop bridges the gap between theoretical knowledge and practical application," explained Professor Mohamed Hassan, who coordinated the event. "Our students gain valuable insights that will serve them well in their future careers."
 
       The program included simulation exercises where students handled real-world scenarios such as guest complaints, emergency situations, and special event coordination. Many participants received internship offers from the participating hotels based on their performance during the workshop.`,
-      image: 'https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: './assets/tour11.jpeg',
       date: new Date('2025-01-10'),
       category: 'news',
       link: '/news-details/2'
@@ -59,7 +59,7 @@ export class ContentService {
       The celebration concluded with a traditional music and dance performance, followed by a cultural fair where students sold handmade crafts and traditional foods, with proceeds supporting the faculty's cultural preservation research projects.
 
       "This event reinforces our commitment to preserving and promoting Egypt's cultural heritage while training our students to be responsible cultural ambassadors," noted Dr. Amira Farouk, Professor of Cultural Tourism.`,
-      image: 'https://images.pexels.com/photos/2177009/pexels-photo-2177009.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: './assets/tour13.jpeg',
       date: new Date('2025-01-05'),
       category: 'news',
       link: '/news-details/3'
@@ -83,7 +83,7 @@ export class ContentService {
       The rise of mobile technology means that tourism experiences increasingly begin and end on smartphones. Mobile-first design and seamless digital experiences are no longer optional but essential for competitive advantage.
 
       As the industry continues to evolve, tourism professionals must stay current with digital trends while maintaining the human touch that makes travel experiences memorable and meaningful.`,
-      image: 'https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: './assets/tour7.jpg',
       date: new Date('2025-01-20'),
       category: 'articles',
       link: '/news-details/4'
@@ -107,7 +107,7 @@ export class ContentService {
       Guest engagement in sustainability efforts can enhance satisfaction while reducing resource consumption. Many travelers appreciate opportunities to participate in environmental programs and view eco-friendly hotels more favorably.
 
       The financial benefits of sustainability often exceed initial investment costs within 2-3 years, making environmental responsibility a sound business strategy for Egyptian hospitality providers.`,
-      image: 'https://images.pexels.com/photos/1134176/pexels-photo-1134176.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: './assets/tour1.jpg',
       date: new Date('2025-01-18'),
       category: 'articles',
       link: '/news-details/5'
@@ -133,7 +133,7 @@ export class ContentService {
       Graduates will be prepared for leadership positions in heritage tourism organizations, cultural institutions, destination management companies, and government tourism agencies.
 
       Applications are now being accepted through the university's online portal, with a deadline of March 31, 2025. Information sessions will be held monthly at the faculty building.`,
-      image: 'https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: './assets/tour15.jpeg',
       date: new Date('2025-01-22'),
       category: 'announcements',
       link: '/news-details/6'
@@ -159,7 +159,7 @@ export class ContentService {
       This initiative aligns with the faculty's commitment to internationalizing education and preparing students for careers in the global tourism industry. Participants return with enhanced language skills, cultural competency, and international networks.
 
       Information sessions will be conducted bi-weekly, with representatives from partner universities visiting campus during the spring semester to meet prospective exchange students.`,
-      image: 'https://images.pexels.com/photos/267885/pexels-photo-267885.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: './assets/tour13.jpeg',
       date: new Date('2025-01-19'),
       category: 'announcements',
       link: '/news-details/7'
@@ -187,7 +187,7 @@ export class ContentService {
       Registration includes conference materials, refreshment breaks, networking lunch, and access to all sessions. Early bird discounts are available for registrations received before February 15, 2025.
 
       The conference provides continuing education credits for tourism professionals and networking opportunities with industry leaders from across the region.`,
-      image: 'https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: './assets/event3.jpg',
       date: new Date('2025-03-15'),
       category: 'events',
       link: '/news-details/8'
@@ -213,7 +213,59 @@ export class ContentService {
       Lunch will feature traditional Egyptian cuisine prepared according to historical recipes, providing a culinary heritage experience that complements the workshop's educational objectives.
 
       Registration is open to students from all disciplines, heritage professionals, and community members interested in cultural preservation. Materials will be provided, but participants are encouraged to bring notebook computers for digital exercises.`,
-      image: 'https://images.pexels.com/photos/2177009/pexels-photo-2177009.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: './assets/event4.jpg',
+      date: new Date('2025-02-28'),
+      category: 'events',
+      link: '/news-details/9'
+    },
+    {
+      id: '9',
+      title: 'Cultural Heritage Preservation Workshop',
+      excerpt: 'Students present innovative projects on preserving Egypt\'s cultural identity and promoting sustainable heritage tourism.',
+      content: `The Faculty of Tourism & Hotels invites students, professionals, and community members to participate in our Cultural Heritage Preservation Workshop, featuring student presentations on innovative approaches to protecting Egypt's cultural legacy.
+
+      Student teams will present projects developed throughout the academic year, focusing on practical solutions for heritage site management, visitor education, and community engagement. Projects include digital documentation initiatives, sustainable tourism models, and cultural interpretation programs.
+
+      Workshop sessions will demonstrate various preservation techniques, from traditional restoration methods to cutting-edge digital technologies. Participants will learn about 3D scanning, virtual reality applications, and digital archives for cultural preservation.
+
+      Expert panels will include archaeologists, museum professionals, and heritage tourism specialists who will provide feedback on student projects and share insights from their professional experience. Discussion topics include balancing preservation with accessibility and engaging younger generations with cultural heritage.
+
+      Hands-on activities will allow participants to experience conservation techniques, traditional craft methods, and interpretive program development. These interactive sessions are designed to provide practical skills applicable to various heritage contexts.
+
+      Community representatives will share perspectives on cultural preservation from local viewpoints, emphasizing the importance of involving communities in heritage tourism development and ensuring that tourism benefits reach local populations.
+
+      The workshop concludes with an action planning session where participants develop concrete steps for implementing heritage preservation initiatives in their communities or professional contexts.
+
+      Lunch will feature traditional Egyptian cuisine prepared according to historical recipes, providing a culinary heritage experience that complements the workshop's educational objectives.
+
+      Registration is open to students from all disciplines, heritage professionals, and community members interested in cultural preservation. Materials will be provided, but participants are encouraged to bring notebook computers for digital exercises.`,
+      image: './assets/event4.jpg',
+      date: new Date('2025-02-28'),
+      category: 'events',
+      link: '/news-details/9'
+    },
+    {
+      id: '9',
+      title: 'Cultural Heritage Preservation Workshop',
+      excerpt: 'Students present innovative projects on preserving Egypt\'s cultural identity and promoting sustainable heritage tourism.',
+      content: `The Faculty of Tourism & Hotels invites students, professionals, and community members to participate in our Cultural Heritage Preservation Workshop, featuring student presentations on innovative approaches to protecting Egypt's cultural legacy.
+
+      Student teams will present projects developed throughout the academic year, focusing on practical solutions for heritage site management, visitor education, and community engagement. Projects include digital documentation initiatives, sustainable tourism models, and cultural interpretation programs.
+
+      Workshop sessions will demonstrate various preservation techniques, from traditional restoration methods to cutting-edge digital technologies. Participants will learn about 3D scanning, virtual reality applications, and digital archives for cultural preservation.
+
+      Expert panels will include archaeologists, museum professionals, and heritage tourism specialists who will provide feedback on student projects and share insights from their professional experience. Discussion topics include balancing preservation with accessibility and engaging younger generations with cultural heritage.
+
+      Hands-on activities will allow participants to experience conservation techniques, traditional craft methods, and interpretive program development. These interactive sessions are designed to provide practical skills applicable to various heritage contexts.
+
+      Community representatives will share perspectives on cultural preservation from local viewpoints, emphasizing the importance of involving communities in heritage tourism development and ensuring that tourism benefits reach local populations.
+
+      The workshop concludes with an action planning session where participants develop concrete steps for implementing heritage preservation initiatives in their communities or professional contexts.
+
+      Lunch will feature traditional Egyptian cuisine prepared according to historical recipes, providing a culinary heritage experience that complements the workshop's educational objectives.
+
+      Registration is open to students from all disciplines, heritage professionals, and community members interested in cultural preservation. Materials will be provided, but participants are encouraged to bring notebook computers for digital exercises.`,
+      image: './assets/event4.jpg',
       date: new Date('2025-02-28'),
       category: 'events',
       link: '/news-details/9'

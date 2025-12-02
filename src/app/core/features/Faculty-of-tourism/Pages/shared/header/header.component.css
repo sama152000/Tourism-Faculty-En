@@ -52,7 +52,7 @@
 
 .lang-btn {
   font-size: 0.85rem;
-  padding: 6px 15px;
+  padding: 6px 40px;
   border-radius: 20px;
 }
 
@@ -78,8 +78,8 @@
   width: 60px;
   height: 60px;
   object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid var(--secondary-color);
+  /* border-radius: 50%; */
+  /* border: 2px solid var(--secondary-color); */
 }
 
 .logo-title {
@@ -106,15 +106,33 @@
   border: none !important;
 }
 
+.main-navigation :ng-deep .p-menubar-submenu {
+  display: none;
+  position: absolute;
+  min-width: 12.5rem;
+  z-index: 1;
+  background: var(--primary-color) !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--p-menubar-submenu-border-radius);
+  box-shadow: var(--p-menubar-submenu-shadow);
+  color: var(--white) !important;
+  flex-direction: column;
+  padding: var(--p-menubar-submenu-padding);
+  gap: var(--p-menubar-submenu-gap);
+}
 /* Use the PrimeNG CSS variable so built-in styles respect the change */
 .faculty-menubar {
-  --p-menubar-background: #4A4A4A !important;
+  --p-menubar-background: var(--primary-color) !important;
   --p-menubar-border-color: transparent !important;
+  /* submenu variable overrides so PrimeNG uses our primary color */
+  --p-menubar-submenu-background: var(--primary-color) !important;
+  --p-menubar-submenu-border-color: transparent !important;
+  --p-menubar-submenu-color: var(--white) !important;
 }
 
 .main-navigation :ng-deep .p-menuitem-link {
   color: var(--white) !important;
-  background-color: var(--text-secondary) !important;
+  background-color: transparent !important; /* use submenu host background */
   padding: 10px 15px;
   font-weight: 500;
   border-radius: var(--border-radius);
@@ -132,6 +150,20 @@
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
   min-width: 200px;
+}
+
+/* Ensure submenu items are readable on the primary color */
+.main-navigation :ng-deep .p-menubar-submenu .p-menuitem-link,
+.main-navigation :ng-deep .p-submenu-list .p-menuitem-link {
+  color: var(--white) !important;
+  background-color: transparent !important;
+}
+
+/* Hover/focus states for submenu items */
+.main-navigation :ng-deep .p-menubar-submenu .p-menuitem-link:hover,
+.main-navigation :ng-deep .p-submenu-list .p-menuitem-link:hover {
+  background-color: rgba(255,255,255,0.06) !important; /* subtle hover */
+  color: var(--white) !important;
 }
 
 .main-navigation :ng-deep .p-menuitem-icon {
@@ -155,7 +187,7 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.95);
+  background:var(--primary-color);
   backdrop-filter: blur(10px);
   z-index: 999;
 }

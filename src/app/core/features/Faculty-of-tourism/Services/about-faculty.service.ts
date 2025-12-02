@@ -19,8 +19,8 @@ export class AboutFacultyService {
         ],
         buttonText: 'Learn More About Us',
         buttonLink: '/about',
-        mainImage: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=600',
-        overlayImage: 'https://images.pexels.com/photos/3184405/pexels-photo-3184405.jpeg?auto=compress&cs=tinysrgb&w=400'
+        mainImage: './assets/slide2.jpg',
+        overlayImage: './assets/about.jpg'
       }
     };
   }

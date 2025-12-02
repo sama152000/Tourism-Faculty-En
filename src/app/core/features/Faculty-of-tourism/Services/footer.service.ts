@@ -59,16 +59,7 @@ export class FooterService {
             { id: '5', label: 'Contact Us', routerLink: '/contact' }
           ]
         },
-        {
-          title: 'Academic Resources',
-          links: [
-            { id: '1', label: 'Student Portal', routerLink: '/student-portal' },
-            { id: '2', label: 'E-Learning', routerLink: '/elearning' },
-            { id: '3', label: 'Digital Library', routerLink: '/library' },
-            { id: '4', label: 'Research Center', routerLink: '/research' },
-            { id: '5', label: 'Academic Calendar', routerLink: '/calendar' }
-          ]
-        },
+        
         {
           title: 'Student Services',
           links: [

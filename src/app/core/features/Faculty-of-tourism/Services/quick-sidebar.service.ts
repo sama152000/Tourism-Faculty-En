@@ -43,10 +43,9 @@ export class QuickSidebarService {
         },
         {
           id: '6',
-          title: 'University Website',
-          icon: 'pi pi-external-link',
-          url: 'https://www.luxor.edu.eg',
-          isExternal: true
+          title: 'About Us',
+          icon: 'pi pi-info-circle',
+          url: '/about',
         }
       ]
     };

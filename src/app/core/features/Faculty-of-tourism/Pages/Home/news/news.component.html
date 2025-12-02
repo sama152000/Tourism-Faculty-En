@@ -4,10 +4,10 @@
     <!-- Section Header -->
     <div class="news-header d-flex justify-between align-center mb-4">
       <h2 class="faculty-title slide-in">{{ newsData.title }}</h2>
-      <a 
-        [href]="newsData.viewAllLink"
-        class="view-all-btn faculty-btn faculty-btn-primary"
-      >
+      <a
+       routerLink="/news-list"
+       class="view-all-btn faculty-btn faculty-btn-primary"
+     >
         <i class="pi pi-list mr-2"></i>
         View All News
       </a>
@@ -67,22 +67,7 @@
     </div>
 
     <!-- News CTA Section -->
-    <div class="news-cta text-center mt-5">
-      <div class="cta-content">
-        <h3 class="cta-title">Stay Updated with Faculty News</h3>
-        <p class="cta-text">Get the latest updates about events, achievements, and developments at the Faculty of Tourism & Hotels.</p>
-        <div class="cta-actions">
-          <a href="/news" class="cta-button faculty-btn faculty-btn-primary">
-            <i class="pi pi-newspaper mr-2"></i>
-            Browse All News
-          </a>
-          <a href="/newsletter" class="cta-button faculty-btn faculty-btn-outline">
-            <i class="pi pi-envelope mr-2"></i>
-            Subscribe to Newsletter
-          </a>
-        </div>
-      </div>
-    </div>
+   
     
   </div>
 </section>

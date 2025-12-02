@@ -24,24 +24,41 @@ export class DepartmentsComponent implements OnInit {
   ngOnInit(): void {
     this.departmentData = this.departmentTabsService.getDepartmentTabsData();
 
-    // Handle query parameters for tab selection
-    this.route.queryParams.subscribe(params => {
-      if (params['tab']) {
-        this.selectedTab = params['tab'];
+    // Handle route parameters for department id
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.selectedTab = this.mapIdToTab(params['id']);
       }
     });
+  }
+
+  private mapIdToTab(id: string): string {
+    const idMap: { [key: string]: string } = {
+      '1': 'tourism-studies',
+      '2': 'hotel-management',
+      '3': 'guidance-interpretation',
+      '4': 'sustainable-tourism'
+    };
+    return idMap[id] || 'tourism-studies'; // default to first tab
   }
 
   onTabChange(value: string | number | undefined): void {
     if (value) {
       this.selectedTab = value.toString();
 
-      // Update URL without reloading
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: { tab: this.selectedTab },
-        queryParamsHandling: 'merge'
-      });
+      // Update URL with department id
+      const id = this.mapTabToId(this.selectedTab);
+      this.router.navigate(['/departments', id]);
     }
+  }
+
+  private mapTabToId(tab: string): string {
+    const tabMap: { [key: string]: string } = {
+      'tourism-studies': '1',
+      'hotel-management': '2',
+      'guidance-interpretation': '3',
+      'sustainable-tourism': '4'
+    };
+    return tabMap[tab] || '1'; // default to first
   }
 }

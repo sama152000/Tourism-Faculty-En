@@ -5,7 +5,8 @@
     <div class="events-header d-flex justify-between align-center mb-4">
       <h2 class="faculty-title slide-in">{{ eventsData.title }}</h2>
       <a 
-        [href]="eventsData.viewAllLink"
+        [routerLink]="eventsData.viewAllLink"
+        [queryParams]="{ category: 'events' }"
         class="view-all-btn faculty-btn faculty-btn-secondary"
       >
         <i class="pi pi-calendar mr-2"></i>
@@ -72,34 +73,14 @@
               <i class="pi pi-info-circle mr-2"></i>
               Event Details
             </a>
-            <button class="reminder-btn faculty-btn faculty-btn-outline">
-              <i class="pi pi-bell"></i>
-              Remind Me
-            </button>
+           
           </div>
         </div>
         
       </div>
     </div>
 
-    <!-- Events CTA Section -->
-    <div class="events-cta">
-      <div class="cta-background"></div>
-      <div class="cta-content text-center">
-        <h3 class="cta-title">Never Miss an Event</h3>
-        <p class="cta-text">Stay informed about all faculty events, workshops, conferences, and special programs.</p>
-        <div class="cta-actions">
-          <a href="/events/calendar" class="cta-button faculty-btn faculty-btn-primary">
-            <i class="pi pi-calendar-plus mr-2"></i>
-            View Full Calendar
-          </a>
-          <a href="/events/subscribe" class="cta-button faculty-btn faculty-btn-outline">
-            <i class="pi pi-envelope mr-2"></i>
-            Subscribe to Updates
-          </a>
-        </div>
-      </div>
-    </div>
+   
     
   </div>
 </section>

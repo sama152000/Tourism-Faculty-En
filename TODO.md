@@ -1,6 +1,11 @@
-# TODO: Replace PrimeNG with HTML and CSS in Departments Component
+# Department Service Integration Task
 
-## Tasks
-- [x] Update departments.component.ts: Remove PrimeNG imports and update imports array
-- [x] Update departments.component.html: Replace PrimeNG tabs, cards, chips, and divider with HTML equivalents
-- [x] Update departments.component.css: Add styles for custom elements and remove PrimeNG-specific styles
+## Completed Tasks
+- [x] Add DepartmentsData import to DepartmentTabsService
+- [x] Add getDepartmentsData() method to DepartmentTabsService
+- [x] Update Home departments component import to use DepartmentTabsService
+- [x] Update Home departments component constructor to inject DepartmentTabsService
+
+## Followup Steps
+- [ ] Test components to ensure they work with the combined service
+- [ ] Remove DepartmentsService if no longer needed

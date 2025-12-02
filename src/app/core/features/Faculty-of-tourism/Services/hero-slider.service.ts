@@ -9,11 +9,11 @@ export class HeroSliderService {
   getHeroSliderData(): HeroSliderData {
     return {
       autoPlay: true,
-      interval: 5000,
+      interval: 3000,
       slides: [
         {
           id: '1',
-          image: 'https://images.pexels.com/photos/2373201/pexels-photo-2373201.jpeg?auto=compress&cs=tinysrgb&w=1200',
+          image: './assets/slide3.jpg',
           title: 'Welcome to the Faculty of Tourism & Hotels',
           description: 'Explore excellence in hospitality, culture, and tourism education at Luxor University.',
           buttonText: 'Learn More',
@@ -21,7 +21,7 @@ export class HeroSliderService {
         },
         {
           id: '2',
-          image: 'https://images.pexels.com/photos/1134176/pexels-photo-1134176.jpeg?auto=compress&cs=tinysrgb&w=1200',
+          image: './assets/slide1.jpg',
           title: 'Learn from Industry Experts',
           description: 'Our programs prepare you for global tourism and hotel management careers.',
           buttonText: 'Explore Programs',
@@ -29,7 +29,7 @@ export class HeroSliderService {
         },
         {
           id: '3',
-          image: 'https://images.pexels.com/photos/2177009/pexels-photo-2177009.jpeg?auto=compress&cs=tinysrgb&w=1200',
+          image: './assets/slide2.jpg',
           title: 'Discover Egypt\'s Cultural Heritage',
           description: 'Study in one of the world\'s most historically rich tourism destinations.',
           buttonText: 'Discover More',

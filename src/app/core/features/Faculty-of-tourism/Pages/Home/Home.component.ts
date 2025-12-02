@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HeroSliderComponent } from "./hero-slider/hero-slider.component";
 import { AboutFacultyComponent } from "./about-faculty/about-faculty.component";
 import { DepartmentsComponent } from "./departments/departments.component";
@@ -12,7 +13,7 @@ import { ImportantLinksComponent } from "./important-links/important-links.compo
   selector: 'app-Home',
   templateUrl: './Home.component.html',
   styleUrls: ['./Home.component.css'],
-  imports: [HeroSliderComponent, AboutFacultyComponent, DepartmentsComponent, MagazineComponent, NewsComponent, EventsComponent, StatisticsComponent, ImportantLinksComponent]
+  imports: [CommonModule, HeroSliderComponent, AboutFacultyComponent, DepartmentsComponent, MagazineComponent, NewsComponent, EventsComponent, StatisticsComponent, ImportantLinksComponent]
 })
 export class HomeComponent implements OnInit {
 

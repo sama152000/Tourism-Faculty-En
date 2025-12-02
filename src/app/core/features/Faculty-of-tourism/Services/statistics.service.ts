@@ -9,7 +9,7 @@ export class StatisticsService {
   getStatisticsData(): StatisticsData {
     return {
       title: 'Faculty Achievement Statistics',
-      backgroundImage: 'https://images.pexels.com/photos/1595391/pexels-photo-1595391.jpeg?auto=compress&cs=tinysrgb&w=1200',
+      backgroundImage: './assets/tour2.jpg',
       statistics: [
         {
           id: '1',

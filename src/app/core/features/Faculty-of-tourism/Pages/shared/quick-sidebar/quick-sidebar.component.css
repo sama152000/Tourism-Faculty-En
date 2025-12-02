@@ -68,6 +68,12 @@
   margin: 0;
 }
 
+.quick-sidebar:not(.expanded) .sidebar-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .sidebar-item {
   margin: 0;
 }
@@ -86,7 +92,7 @@
 }
 
 .sidebar-link:hover {
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-color));
   color: var(--white);
   transform: translateX(5px);
 }
@@ -160,8 +166,10 @@
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
   .quick-sidebar {
+    display: none;
     width: 50px;
     right: 10px;
+
   }
   
   .quick-sidebar.expanded {
@@ -204,6 +212,41 @@
 .quick-sidebar:not(.expanded) .sidebar-link:hover {
   background: var(--primary-color);
   transform: scale(1.1);
+}
+
+/* Ensure icons are clearly visible in collapsed state */
+.quick-sidebar:not(.expanded) .link-icon {
+  opacity: 1 !important;
+  font-size: 1.35rem !important;
+  color: var(--text-primary) !important;
+}
+
+/* Add a small scale-up when the user hovers the icon in collapsed mode */
+.quick-sidebar:not(.expanded) .link-icon:hover {
+  transform: scale(1.15);
+}
+
+.quick-sidebar:not(.expanded) .sidebar-link {
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hide text in collapsed state to only show icons */
+.quick-sidebar:not(.expanded) .link-text {
+  display: none !important;
+}
+
+/* Provide a narrow visible bar so icons are obvious even when closed */
+.quick-sidebar:not(.expanded) {
+  width: 60px; /* keep narrow */
+  padding: 8px 0; /* small padding */
+}
+
+/* Improve focus/hover for accessibility */
+.quick-sidebar:not(.expanded) .sidebar-link:focus,
+.quick-sidebar:not(.expanded) .sidebar-link:hover {
+  transform: none; /* avoid shift */
+  outline: none;
 }
 
 /* ===== TOOLTIP FOR COLLAPSED STATE ===== */

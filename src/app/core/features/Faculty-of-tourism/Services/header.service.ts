@@ -48,6 +48,7 @@ export class HeaderService {
         {
           id: '2',
           label: 'About',
+          routerLink: '/about',
           items: aboutSections.map(section => ({
             id: `2-${section.id}`,
             label: section.title,
@@ -58,6 +59,7 @@ export class HeaderService {
         {
           id: '3',
           label: 'Departments',
+          routerLink: '/departments',
           items: departments.map(dept => ({
             id: `3-${dept.id}`,
             label: dept.name,
@@ -68,6 +70,7 @@ export class HeaderService {
         {
           id: '4',
           label: 'News',
+          routerLink: '/news-list',
           items: contentCategories.map(category => ({
             id: `4-${category.id}`,
             label: category.label,
@@ -78,6 +81,7 @@ export class HeaderService {
         {
           id: '5',
           label: 'Sectors',
+          routerLink: '/sectors',
           items: sectors.map(sector => ({
             id: `5-${sector.id}`,
             label: sector.name,
@@ -88,6 +92,7 @@ export class HeaderService {
         {
           id: '7',
           label: 'Services',
+          routerLink: '/services',
           items: services.map(service => ({
             id: `7-${service.id}`,
             label: service.name,
@@ -98,6 +103,7 @@ export class HeaderService {
         {
           id: '8',
           label: 'Units',
+          routerLink: '/units',
           items: units.map(unit => ({
             id: `8-${unit.id}`,
             label: unit.name,

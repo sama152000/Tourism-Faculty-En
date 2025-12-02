@@ -9,7 +9,7 @@ export class EventsService {
   getEventsData(): EventsData {
     return {
       title: 'Upcoming Faculty Events',
-      viewAllLink: '/events',
+      viewAllLink: '/news-list?category=events',
       events: [
         {
           id: '1',
