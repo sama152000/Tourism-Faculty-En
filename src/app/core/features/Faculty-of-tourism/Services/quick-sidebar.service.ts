@@ -13,39 +13,39 @@ export class QuickSidebarService {
       links: [
         {
           id: '1',
-          title: 'Student Portal',
-          icon: 'pi pi-user',
-          url: '/student-portal'
-        },
-        {
-          id: '2',
-          title: 'E-Learning',
-          icon: 'pi pi-desktop',
-          url: '/elearning'
-        },
-        {
-          id: '3',
-          title: 'Library',
-          icon: 'pi pi-book',
-          url: '/library'
+          title: 'About the Faculty',
+          icon: 'pi pi-info-circle',
+          url: '/about'
         },
         {
           id: '4',
-          title: 'Admissions',
+          title: 'News & Events',
           icon: 'pi pi-file-edit',
-          url: '/admissions'
+          url: '/news-list'
+        },
+        {
+          id: '2',
+          title: 'Sectors',
+          icon: 'pi pi-desktop',
+          url: '/sectors'
+        },
+        {
+          id: '3',
+          title: 'Units',
+          icon: 'pi pi-book',
+          url: '/units'
+        },
+        {
+          id: '6',
+          title: 'Departments',
+          icon: 'pi pi-user',
+          url: '/departments'
         },
         {
           id: '5',
           title: 'Contact Us',
           icon: 'pi pi-phone',
           url: '/contact'
-        },
-        {
-          id: '6',
-          title: 'About Us',
-          icon: 'pi pi-info-circle',
-          url: '/about',
         }
       ]
     };

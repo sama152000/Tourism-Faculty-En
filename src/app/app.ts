@@ -14,7 +14,7 @@ import { QuickSidebarComponent } from "./core/features/Faculty-of-tourism/Pages/
 })
 export class App {
 
-  protected title = 'Faculty-Of-Education';
+  protected title = 'Faculty-Of-Tourism';
   showScrollButton = false;
 
   @HostListener('window:scroll', [])

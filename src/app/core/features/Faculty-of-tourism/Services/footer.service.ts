@@ -55,7 +55,7 @@ export class FooterService {
             { id: '1', label: 'Home', routerLink: '/' },
             { id: '2', label: 'About Us', routerLink: '/about' },
             { id: '3', label: 'Departments', routerLink: '/departments' },
-            { id: '4', label: 'News & Events', routerLink: '/news' },
+            { id: '4', label: 'News & Events', routerLink: '/news-list' },
             { id: '5', label: 'Contact Us', routerLink: '/contact' }
           ]
         },
@@ -63,11 +63,10 @@ export class FooterService {
         {
           title: 'Student Services',
           links: [
-            { id: '1', label: 'Admissions', routerLink: '/admissions' },
-            { id: '2', label: 'Student Affairs', routerLink: '/student-affairs' },
-            { id: '3', label: 'Career Services', routerLink: '/careers' },
-            { id: '4', label: 'International Programs', routerLink: '/international' },
-            { id: '5', label: 'Alumni Network', routerLink: '/alumni' }
+            { id: '1', label: 'Academic Support', routerLink: '/services/1' },
+            { id: '2', label: 'Library & Information Resources', routerLink: '/services/2' },
+            { id: '3', label: 'Career Services', routerLink: '/services/3' },
+            { id: '4', label: 'International Programs', routerLink: '/services/4' },
           ]
         }
       ]

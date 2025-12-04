@@ -18,6 +18,8 @@ export const routes: Routes = [
   { path: 'sectors', component: SectorsComponent },
     { path: 'units', component: UnitsComponent },
         { path: 'services', component: ServicesComponent },
+                { path: 'services/:id', component: ServicesComponent },
+
   { path: 'news-list', component: NewsListComponent },
   { path: 'news-details/:id', component: NewsDetailsComponent },
   { path: 'contact', component: ContactUsComponent },
