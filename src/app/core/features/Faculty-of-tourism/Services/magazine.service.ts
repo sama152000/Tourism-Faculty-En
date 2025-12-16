@@ -1,20 +1,36 @@
 import { Injectable } from '@angular/core';
-import { MagazineData } from '../model/magazine.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
+import { Journal, MagazineData } from '../model/magazine.model';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MagazineService {
+  constructor(private http: HttpClient) {}
 
-  getMagazineData(): MagazineData {
-    return {
-      magazineInfo: {
-        title: 'Faculty Research Magazine',
-        description: 'The International Journal of Tourism and Hospitality Management (IJTHM) is our faculty\'s premier publication featuring cutting-edge research in tourism and hospitality. The latest issue explores job stress and its impact on employee performance in three-star hotels, examining psychological and physiological factors that contribute to organizational success.',
-        buttonText: 'Read Latest Issue',
-        buttonLink: 'https://ijthm.journals.ekb.eg/',
-        coverImage: '/assets/mag.jpg'
-      }
-    };
+  getMagazineData(): Observable<MagazineData> {
+    return this.http.get<any>(`${environment.apiUrl}journals/getall`).pipe(
+      map(res => {
+        const journals: Journal[] = res.data.map((j: any) => ({
+          id: j.id,
+          pubishedDate: j.pubishedDate,
+          title: j.title,
+          description: j.description,
+          journalAttachments: j.journalAttachments || []
+        }));
+
+        return {
+          title: 'Faculty Magazine',
+          subtitle: 'Learn about the latest scientific publications of the Faculty of Tourism and Hotels',
+          journals: journals
+        } as MagazineData;
+      })
+    );
+  }
+
+  getJournals(): Observable<Journal[]> {
+    return this.getMagazineData().pipe(map(data => data.journals));
   }
 }

@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DepartmentTabsService } from '../../../Services/department-tabs.service';
-import { DepartmentsData } from '../../../model/departments.model';
+import { DepartmentTabsData, Department } from '../../../model/departments.model';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { DepartmentsService } from '../../../Services/departments.service';
 
 @Component({
   selector: 'app-departments',
@@ -15,24 +14,25 @@ import { DepartmentsService } from '../../../Services/departments.service';
   styleUrls: ['./departments.component.css']
 })
 export class DepartmentsComponent implements OnInit {
-  departmentsData!: DepartmentsData;
+  departmentsData!: DepartmentTabsData;
+  displayedDepartments: Department[] = [];
 
-  constructor(private departmentsService: DepartmentsService) {}
+  constructor(private departmentTabsService: DepartmentTabsService) {}
 
   ngOnInit(): void {
-    const data = this.departmentsService.getDepartmentsData();
-    this.departmentsData = {
-      ...data,
-      departments: data.departments.slice(0, 3)
-    };
+    this.departmentTabsService.getDepartmentTabsData().subscribe(data => {
+      this.departmentsData = data;
+      // عرض أول 3 أقسام فقط في الهوم
+      this.displayedDepartments = data.sections.slice(0, 3);
+    });
   }
 
   getDeptFeatures(deptId: string): string[] {
     const features: { [key: string]: string[] } = {
-      '1': ['Heritage Sites', 'Tour Planning', 'Cultural Studies'],
-      '2': ['Operations', 'F&B Management', 'Service Quality'],
-      '3': ['Professional Guiding', 'Interpretation', 'Communication'],
-      '4': ['Eco-Tourism', 'Conservation', 'Community Tourism']
+      '1': ['المواقع التراثية', 'تخطيط الرحلات', 'الدراسات الثقافية'],
+      '2': ['العمليات الفندقية', 'إدارة الأغذية والمشروبات', 'جودة الخدمة'],
+      '3': ['الإرشاد السياحي الاحترافي', 'التفسير التراثي', 'مهارات التواصل'],
+      '4': ['السياحة البيئية', 'الحفاظ على البيئة', 'السياحة المجتمعية']
     };
     return features[deptId] || [];
   }

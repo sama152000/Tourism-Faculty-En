@@ -1,41 +1,48 @@
 import { Injectable } from '@angular/core';
-import { NewsData } from '../model/news.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
+import { NewsPost, NewsCategory, NewsTabsData } from '../model/news.model';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
+  constructor(private http: HttpClient) {}
 
-  getNewsData(): NewsData {
-    return {
-      title: 'Latest Faculty News',
-      viewAllLink: '/news',
-      news: [
-        {
-          id: '1',
-          title: 'Faculty Seminar on Sustainable Tourism Development',
-          excerpt: 'Our faculty organized a comprehensive seminar focusing on eco-friendly and sustainable tourism development practices for the future.',
-          image: 'https://images.pexels.com/photos/2373201/pexels-photo-2373201.jpeg?auto=compress&cs=tinysrgb&w=400',
-          date: new Date('2025-01-15'),
-          link: '/news/sustainable-tourism-seminar'
-        },
-        {
-          id: '2',
-          title: 'Student Workshop in Hotel Operations Management',
-          excerpt: 'Students participated in an intensive workshop gaining practical insights into hospitality and hotel management best practices.',
-          image: 'https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=400',
-          date: new Date('2025-01-10'),
-          link: '/news/hotel-operations-workshop'
-        },
-        {
-          id: '3',
-          title: 'Annual Cultural Heritage Week Celebration',
-          excerpt: 'The annual event showcased diverse performances and exhibits celebrating Egypt\'s rich cultural heritage and tourism significance.',
-          image: 'https://images.pexels.com/photos/2177009/pexels-photo-2177009.jpeg?auto=compress&cs=tinysrgb&w=400',
-          date: new Date('2025-01-05'),
-          link: '/news/cultural-heritage-week'
-        }
-      ]
-    };
+  getNewsTabsData(): Observable<NewsTabsData> {
+    return this.http.get<any>(`${environment.apiUrl}posts/getall`).pipe(
+      map(res => {
+        const posts: NewsPost[] = res.data;
+
+        // تجميع الأخبار حسب الـ categoryName
+        const categoryMap: { [key: string]: NewsPost[] } = {};
+        posts.forEach(post => {
+          post.postCategories.forEach(cat => {
+            if (!categoryMap[cat.categoryName]) {
+              categoryMap[cat.categoryName] = [];
+            }
+            categoryMap[cat.categoryName].push(post);
+          });
+        });
+
+        const categories: NewsCategory[] = Object.keys(categoryMap).map(name => ({
+          categoryName: name,
+          posts: categoryMap[name]
+        }));
+
+        return {
+          title: 'News and Events',
+          subtitle: 'Follow the latest news and events related to the faculty',
+          sections: categories
+        } as NewsTabsData;
+      })
+    );
+  }
+
+  getNews(): Observable<NewsPost[]> {
+    return this.http.get<any>(`${environment.apiUrl}posts/getall`).pipe(
+      map(res => res.data as NewsPost[])
+    );
   }
 }

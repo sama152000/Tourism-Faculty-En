@@ -1,41 +1,36 @@
 import { Injectable } from '@angular/core';
-import { StatisticsData } from '../model/statistics.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
+import { Statistic, StatisticsData } from '../model/statistics.model';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatisticsService {
+  constructor(private http: HttpClient) {}
 
-  getStatisticsData(): StatisticsData {
-    return {
-      title: 'Faculty Achievement Statistics',
-      backgroundImage: './assets/tour2.jpg',
-      statistics: [
-        {
-          id: '1',
-          value: 2500,
-          label: 'Students Enrolled',
-          icon: 'pi pi-users'
-        },
-        {
-          id: '2',
-          value: 1200,
-          label: 'Graduates',
-          icon: 'pi pi-graduation-cap'
-        },
-        {
-          id: '3',
-          value: 85,
-          label: 'Faculty Members',
-          icon: 'pi pi-user'
-        },
-        {
-          id: '4',
-          value: 40,
-          label: 'International Partnerships',
-          icon: 'pi pi-globe'
-        }
-      ]
-    };
+  getStatisticsData(): Observable<StatisticsData> {
+    return this.http.get<any>(`${environment.apiUrl}statistics/getall`).pipe(
+      map(res => {
+        const stats: Statistic[] = res.data.map((s: any) => ({
+          id: s.id,
+          title: s.title,
+          value: s.value,
+          iconPath: s.iconPath,
+          isActive: s.isActive
+        }));
+
+        return {
+          title: 'Faculty Statistics',
+          subtitle: 'Learn about the most prominent numbers and achievements of the Faculty of Tourism and Hotels',
+          items: stats
+        } as StatisticsData;
+      })
+    );
+  }
+
+  getStatistics(): Observable<Statistic[]> {
+    return this.getStatisticsData().pipe(map(data => data.items));
   }
 }

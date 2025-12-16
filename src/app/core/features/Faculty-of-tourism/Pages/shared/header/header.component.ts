@@ -15,14 +15,24 @@ import { ButtonModule } from 'primeng/button';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  headerData!: HeaderData;
+  headerData: HeaderData = {
+    logo: '',
+    title: '',
+    navigationItems: [],
+    socialLinks: [],
+    searchPlaceholder: '',
+    languageButton: ''
+  };
   isMobileMenuOpen = false;
 
   constructor(private headerService: HeaderService) {}
 
-  ngOnInit(): void {
-    this.headerData = this.headerService.getHeaderData();
-  }
+ ngOnInit(): void {
+  this.headerService.getHeaderData().subscribe(data => {
+    this.headerData = data;
+  });
+}
+
 
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
