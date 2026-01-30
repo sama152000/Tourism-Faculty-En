@@ -13,7 +13,7 @@ import { NewsTabsData, NewsPost } from '../../model/news.model';
 })
 export class NewsListComponent implements OnInit {
   newsData!: NewsTabsData;
-  selectedCategory: string = 'All';
+  selectedCategory: string = 'All'; // ✅ default category in English
 
   constructor(
     private newsService: NewsService,
@@ -26,7 +26,7 @@ export class NewsListComponent implements OnInit {
       this.newsData = {
         ...data,
         sections: [
-          { categoryName: 'All', posts: data.sections.flatMap(s => s.posts) },
+          { categoryName: 'All', posts: data.sections.flatMap(s => s.posts) }, // ✅ English label
           ...data.sections
         ]
       };
@@ -50,7 +50,7 @@ export class NewsListComponent implements OnInit {
 
   formatDate(dateStr: string): string {
     const date = new Date(dateStr);
-    return new Intl.DateTimeFormat('En-EG', {
+    return new Intl.DateTimeFormat('en-US', { // ✅ English locale
       year: 'numeric',
       month: 'long',
       day: 'numeric'
@@ -60,5 +60,10 @@ export class NewsListComponent implements OnInit {
   get selectedPosts(): NewsPost[] {
     const section = this.newsData.sections.find(s => s.categoryName === this.selectedCategory);
     return section ? section.posts : [];
+  }
+
+  // ✅ navigate to post details using slug
+  goToPost(post: NewsPost): void {
+    this.router.navigate(['/news', post.slug]); 
   }
 }

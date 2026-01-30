@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { Center, CentersTabsData } from '../model/center.model';
 import { forkJoin, map, Observable } from 'rxjs';
+import { slugify } from '../../../../utilities/slug.util'; // ✅ slugify function
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,14 @@ export class CentersService {
         const centers: Center[] = centersRes.data.map((center: any) => ({
           ...center,
           details: detailsRes.data.filter((d: any) => d.centerId === center.id),
-          members: membersRes.data.filter((m: any) => m.centerId === center.id)
+          members: membersRes.data.filter((m: any) => m.centerId === center.id),
+          slug: slugify(center.centerNameEn || center.centerName) // ✅ generate slug from English or Arabic name
         }));
 
-        return {title: 'Centers',
-subtitle: 'Learn about the centers affiliated with the faculty',
-    sections: centers
+        return {
+          title: 'Centers',
+          subtitle: 'Explore the centers affiliated with the faculty',
+          sections: centers
         } as CentersTabsData;
       })
     );

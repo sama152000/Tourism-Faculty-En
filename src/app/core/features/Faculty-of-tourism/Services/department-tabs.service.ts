@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { Department, DepartmentTabsData } from '../model/departments.model';
 import { forkJoin, map, Observable } from 'rxjs';
+import { slugify } from '../../../../utilities/slug.util'; // ✅ slugify function
 
 @Injectable({
   providedIn: 'root'
@@ -24,12 +25,13 @@ export class DepartmentTabsService {
           details: detailsRes.data.filter((d: any) => d.departmentId === dept.id),
           members: membersRes.data.filter((m: any) => m.departmentId === dept.id),
           programs: programsRes.data.filter((p: any) => p.departmentId === dept.id),
-          services: servicesRes.data.filter((s: any) => s.departmentId === dept.id)
+          services: servicesRes.data.filter((s: any) => s.departmentId === dept.id),
+          slug: slugify(dept.nameEn || dept.name) // ✅ generate slug from English or Arabic name
         }));
 
         return {
-         title: 'Academic Departments',
-  subtitle: 'Learn about the different departments of the faculty',
+          title: 'Academic Departments',
+          subtitle: 'Explore the different departments of the faculty',
           sections: departments
         } as DepartmentTabsData;
       })

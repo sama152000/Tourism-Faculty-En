@@ -124,11 +124,10 @@
   overflow: hidden;
   box-shadow: var(--shadow-lg);
 }
-
 .content-featured-image {
   width: 100%;
-  height: 400px;
-  object-fit: cover;
+  height: 700px;
+  object-fit: fill;
 }
 
 /* Content Body */

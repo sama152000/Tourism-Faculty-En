@@ -4,7 +4,7 @@ import { NewsService } from '../../../Services/news.service';
 import { NewsPost } from '../../../model/news.model';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { RouterLink } from "@angular/router";
+import { RouterLink, Router } from "@angular/router";
 
 @Component({
   selector: 'app-news',
@@ -18,32 +18,52 @@ export class NewsComponent implements OnInit {
   newsData: { news: NewsPost[] } = { news: [] };
   @Input() limit: number = 3; // default limit for home page
 
-  constructor(private newsService: NewsService) {}
+  constructor(private newsService: NewsService, private router: Router) {}
 
   ngOnInit(): void {
-  this.newsService.getNews().subscribe(posts => {
-    // فلترة الأخبار فقط (case-insensitive)
-    const newsOnly = posts.filter(p =>
-      p.postCategories.some(c => c.categoryName.toLowerCase() === 'news')
-    );
-
-    // ترتيب حسب التاريخ الأحدث
-    const sorted = [...newsOnly].sort(
-      (a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
-    );
-
-    this.newsPosts = sorted.slice(0, this.limit);
-    this.newsData.news = this.newsPosts;
-  });
-}
-
+    this.newsService.getNews().subscribe(posts => {
+      // ✅ filter only "News" category (English)
+      const newsOnly = posts.filter(p =>
+        p.postCategories.some(c => c.categoryName === 'News')
+      );
+      this.newsPosts = newsOnly.slice(0, this.limit);
+      this.newsData.news = this.newsPosts;
+    });
+  }
 
   formatDate(dateStr: string): string {
     const date = new Date(dateStr);
-    return new Intl.DateTimeFormat('en-EG', {
+    return new Intl.DateTimeFormat('en-US', { // ✅ English locale
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     }).format(date);
+  }
+
+  goToPost(post: NewsPost): void {
+    if (!post.slug) {
+      this.handleMissingSlug();
+      return;
+    }
+    this.router.navigate(['/news', post.slug]);
+  }
+
+  handleMissingSlug(event?: Event): void {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    console.warn('Post has no slug; cannot navigate to details.');
+  }
+
+  navigateToPost(slug: string): void {
+    this.router.navigate(['/news', slug]).then(() => {
+      this.loadPostDetails(slug);
+      window.scrollTo(0, 0);
+    });
+  }
+
+  loadPostDetails(slug: string): void {
+    // Logic to load post details if needed
   }
 }

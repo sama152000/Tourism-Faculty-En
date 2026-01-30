@@ -55,14 +55,14 @@
             <div class="sidebar-section" *ngIf="previousPost || nextPost">
               <h3 class="sidebar-title">Navigation</h3>
               <div class="navigation-buttons">
-                <a *ngIf="previousPost" class="nav-btn prev-btn" (click)="navigateToPost(previousPost.id)">
+                <a *ngIf="previousPost" class="nav-btn prev-btn" (click)="navigateToPost(previousPost.slug!)">
                   <i class="pi pi-arrow-right"></i>
                   <div class="nav-content">
                     <span class="nav-label">Previous</span>
                     <span class="nav-title">{{ previousPost.title }}</span>
                   </div>
                 </a>
-                <a *ngIf="nextPost" class="nav-btn next-btn" (click)="navigateToPost(nextPost.id)">
+                <a *ngIf="nextPost" class="nav-btn next-btn" (click)="navigateToPost(nextPost.slug!)">
                   <div class="nav-content">
                     <span class="nav-label">Next</span>
                     <span class="nav-title">{{ nextPost.title }}</span>
@@ -76,7 +76,7 @@
             <div class="sidebar-section" *ngIf="relatedPosts.length > 0">
               <h3 class="sidebar-title">Related Content</h3>
               <div class="related-items">
-                <a *ngFor="let item of relatedPosts" class="related-item" (click)="navigateToPost(item.id)">
+                <a *ngFor="let item of relatedPosts" class="related-item" (click)="navigateToPost(item.slug!)">
                   <img [src]="item.featuredImagePath" [alt]="item.title" class="related-image">
                   <div class="related-content">
                     <h4 class="related-title">{{ item.title }}</h4>
@@ -96,7 +96,7 @@
                 <a routerLink="/news-list" class="quick-link">
                   <i class="pi pi-list"></i> All News & Events
                 </a>
-                <a routerLink="/news-list" [queryParams]="{category: 'Event'}" class="quick-link">
+                <a routerLink="/news-list" [queryParams]="{category: 'Events'}" class="quick-link">
                   <i class="pi pi-calendar"></i> Upcoming Events
                 </a>
                 <a routerLink="/contact" class="quick-link">

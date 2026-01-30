@@ -15,37 +15,37 @@ export class QuickSidebarService {
           id: '1',
           title: 'About the Faculty',
           icon: 'pi pi-info-circle',
-          url: '/about'
+          routerLink: '/about'
         },
         {
           id: '4',
           title: 'News & Events',
           icon: 'pi pi-file-edit',
-          url: '/news-list'
+          routerLink: '/news-list'
         },
         {
           id: '2',
           title: 'Sectors',
           icon: 'pi pi-desktop',
-          url: '/sectors'
+          routerLink: '/sectors'
         },
         {
           id: '3',
           title: 'Units',
           icon: 'pi pi-book',
-          url: '/units'
+          routerLink: '/units'
         },
         {
           id: '6',
           title: 'Departments',
           icon: 'pi pi-user',
-          url: '/departments'
+          routerLink: '/departments'
         },
         {
           id: '5',
           title: 'Contact Us',
           icon: 'pi pi-phone',
-          url: '/contact'
+          routerLink: '/contact'
         }
       ]
     };

@@ -23,7 +23,7 @@
     <ul class="sidebar-links">
       <li *ngFor="let link of sidebarData.links; let i = index" class="sidebar-item">
         <a 
-          [href]="link.url"
+          [href]="link.routerLink"
           [target]="link.isExternal ? '_blank' : '_self'"
           [rel]="link.isExternal ? 'noopener noreferrer' : null"
           class="sidebar-link"

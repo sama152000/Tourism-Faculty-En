@@ -14,8 +14,8 @@
           <button
             *ngFor="let section of aboutData.sections"
             class="tab-button"
-            [class.active]="selectedTab === section.id"
-            (click)="onTabChange(section.id)"
+            [class.active]="selectedTab === section.slug"
+            (click)="onTabChange(section.slug!)"
           >
             {{ section.title }}
           </button>
@@ -26,7 +26,7 @@
           <div
             *ngFor="let section of aboutData.sections"
             class="tab-panel"
-            [class.active]="selectedTab === section.id"
+            [class.active]="selectedTab === section.slug"
           >
             <div class="tab-content-wrapper">
               <div class="row align-items-center" *ngIf="section.id !== 'dean-word' || !section.image">
