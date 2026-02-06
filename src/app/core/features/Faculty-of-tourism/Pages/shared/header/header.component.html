@@ -1,5 +1,5 @@
 <!-- TOP BAR -->
-<div class="faculty-topbar">
+<div class="faculty-topbar" *ngIf="headerData">
   <div class="faculty-container">
     <div class="d-flex justify-between align-center">
       <div class="social-links">
@@ -26,7 +26,7 @@
 </div>
 
 <!-- MAIN HEADER -->
-<header class="faculty-header">
+<header class="faculty-header" *ngIf="headerData">
   <div class="faculty-container">
     <div class="header-content d-flex justify-between align-center">
       <!-- Logo Section -->

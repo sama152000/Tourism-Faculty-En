@@ -56,7 +56,7 @@ export class HeaderService {
           logo: logoUrl,
           title: 'Tourism and Hotels',
           searchPlaceholder: 'Search...',
-          languageButton: 'English',
+          languageButton: 'عربي',
           socialLinks: [
             { id: '1', platform: 'Facebook', url: contact?.facebook || '#', icon: 'pi pi-facebook' },
             { id: '2', platform: 'Email', url: contact?.email ? `mailto:${contact.email}` : '#', icon: 'pi pi-envelope' },
