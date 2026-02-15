@@ -34,7 +34,10 @@
               <div class="row align-items-center">
                 <div class="col-lg-8 col-md-12">
                   <h2 class="department-title">{{ sector.pageTitle }}</h2>
-                  <p class="faculty-text">{{ sector.about }}</p>
+                  <!-- ✅ النبذة باستخدام innerHTML + cleanHtml -->
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="sector.about | cleanHtml">
+                  </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
                   <div class="department-stats">
@@ -55,7 +58,9 @@
               <div class="mission-card mb-4">
                 <div class="card-header">Sector Mission</div>
                 <div class="card-body">
-                  <p class="faculty-text">{{ sector.mission }}</p>
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="sector.mission | cleanHtml">
+                  </div>
                 </div>
               </div>
 
@@ -63,7 +68,9 @@
               <div class="mission-card mb-4">
                 <div class="card-header">Sector Vision</div>
                 <div class="card-body">
-                  <p class="faculty-text">{{ sector.vision }}</p>
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="sector.vision | cleanHtml">
+                  </div>
                 </div>
               </div>
 
@@ -88,7 +95,9 @@
                 <div class="card-body">
                   <div *ngFor="let detail of sector.details">
                     <h4>{{ detail.title }}</h4>
-                    <p class="faculty-text">{{ detail.content }}</p>
+                    <div class="faculty-text quill-content description"
+                         [innerHTML]="detail.content | cleanHtml">
+                    </div>
                   </div>
                 </div>
               </div>

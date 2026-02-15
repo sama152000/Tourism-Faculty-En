@@ -24,7 +24,8 @@
           />
           <div class="image-overlay">
             <a 
-              [routerLink]="['/departments', department.slug]"
+              [routerLink]="['/departments']"
+              [queryParams]="{ tab: department.slug }"
               class="explore-btn faculty-btn faculty-btn-secondary"
             >
               <i class="pi pi-eye"></i>
@@ -36,7 +37,7 @@
         <!-- Department Info -->
         <div class="dept-info faculty-card-body">
           <h3 class="dept-name faculty-subtitle">{{ department.name }}</h3>
-          <p class="dept-description faculty-text">{{ department.about }}</p>
+          <!-- <p class="dept-description faculty-text">{{ department.about }}</p> -->
           
           <!-- Department Features -->
           <!-- <div class="dept-features">
@@ -47,7 +48,8 @@
           </div>
            -->
           <a
-            [routerLink]="['/departments', department.slug]"
+            [routerLink]="['/departments']"
+            [queryParams]="{ tab: department.slug }"
             class="learn-more-btn faculty-btn faculty-btn-outline mt-auto"
           >
             Learn more

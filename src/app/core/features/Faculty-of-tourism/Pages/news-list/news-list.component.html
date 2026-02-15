@@ -11,12 +11,8 @@
       <div class="content-tabs">
         <!-- Tabs -->
         <div class="content-tablist">
-          <button
-            *ngFor="let category of newsData.sections"
-            class="content-tab"
-            [class.active]="selectedCategory === category.categoryName"
-            (click)="onTabChange(category.categoryName)"
-          >
+          <button *ngFor="let category of newsData.sections" class="content-tab"
+            [class.active]="selectedCategory === category.categoryName" (click)="onTabChange(category.categoryName)">
             <span class="tab-label">{{ category.categoryName }}</span>
             <span class="tab-count">{{ category.posts.length }}</span>
           </button>
@@ -41,7 +37,9 @@
                     </span>
                   </div>
                   <h3 class="content-title">{{ item.title }}</h3>
-                  <p class="content-excerpt">{{ item.content | slice:0:150 }}...</p>
+                  <!-- ✅ عرض المقتطف باستخدام innerHTML + cleanHtml -->
+                  <div class="content-excerpt quill-content description"
+                    [innerHTML]="(item.content | cleanHtml) | slice:0:150"> </div>
                   <div class="content-card-footer">
                     <a [routerLink]="['/news', item.slug]" class="faculty-btn faculty-btn-primary">
                       Read More

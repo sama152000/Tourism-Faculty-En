@@ -5,10 +5,11 @@ import { RouterModule } from "@angular/router";
 import { HeaderComponent } from "./core/features/Faculty-of-tourism/Pages/shared/header/header.component";
 import { FooterComponent } from "./core/features/Faculty-of-tourism/Pages/shared/footer/footer.component";
 import { QuickSidebarComponent } from "./core/features/Faculty-of-tourism/Pages/shared/quick-sidebar/quick-sidebar.component";
+import { LoaderComponent } from '../app/core/features/Faculty-of-tourism/Pages/shared/loader/loader.component';
 
 @Component({
   selector: 'app-root',
-  imports: [ButtonModule, CommonModule, RouterModule, HeaderComponent, FooterComponent, QuickSidebarComponent],
+  imports: [ButtonModule, CommonModule, RouterModule, HeaderComponent, FooterComponent, QuickSidebarComponent, LoaderComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -16,7 +17,11 @@ export class App {
 
   protected title = 'Faculty-Of-Tourism';
   showScrollButton = false;
+ isLoading = true;
 
+  onLoadingComplete(): void {
+    this.isLoading = false;
+  }
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.showScrollButton = window.pageYOffset > 300;

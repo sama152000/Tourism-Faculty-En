@@ -13,8 +13,8 @@
         <div class="departments-tablist">
           <button *ngFor="let center of centerData.sections"
                   class="departments-tab"
-                  [class.active]="selectedTab === center.id"
-                  (click)="onTabChange(center.id)">
+                  [class.active]="selectedTab === center.slug"
+                  (click)="onTabChange(center.slug!)">
             {{ center.centerName }}
           </button>
         </div>
@@ -23,14 +23,17 @@
         <div class="departments-tabpanels">
           <div *ngFor="let center of centerData.sections"
                class="departments-tabpanel"
-               [class.active]="selectedTab === center.id">
+               [class.active]="selectedTab === center.slug">
             <div class="department-content-wrapper">
 
               <!-- Center Header -->
               <div class="row">
                 <div class="col-lg-8 col-md-12">
                   <h2 class="department-title">{{ center.centerName }}</h2>
-                  <p class="faculty-text">{{ center.about }}</p>
+                  <!-- ✅ النبذة باستخدام innerHTML + cleanHtml -->
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="center.about | cleanHtml">
+                  </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
                   <div class="department-stats">
@@ -51,7 +54,9 @@
               <div class="mission-card mb-4">
                 <div class="card-header">Center Mission</div>
                 <div class="card-body">
-                  <p class="faculty-text">{{ center.mission }}</p>
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="center.mission | cleanHtml">
+                  </div>
                 </div>
               </div>
 
@@ -59,9 +64,9 @@
               <div class="mission-card mb-4">
                 <div class="card-header">Center Vision</div>
                 <div class="card-body">
-                  <p class="faculty-text">
-                    {{ center.vision && center.vision.trim() !== '' ? center.vision : 'No vision has been recorded for this center yet.' }}
-                  </p>
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="center.vision | cleanHtml">
+                  </div>
                 </div>
               </div>
 
@@ -85,9 +90,13 @@
                 <div class="card-header">Center Details</div>
                 <div class="card-body">
                   <div *ngFor="let detail of center.details">
-                    <h4>{{ detail.title }}</h4>
-                    <p class="faculty-text">{{ detail.description }}</p>
-                    <p class="faculty-text">{{ detail.content }}</p>
+                    <!-- <h4>{{ detail.title }}</h4> -->
+                    <div class="faculty-text quill-content description"
+                         [innerHTML]="detail.description | cleanHtml">
+                    </div>
+                    <div class="faculty-text quill-content description"
+                         [innerHTML]="detail.content | cleanHtml">
+                    </div>
                   </div>
                 </div>
               </div>

@@ -11,21 +11,24 @@
       <div class="departments-tabs">
         <div class="departments-tablist">
           <button *ngFor="let department of departmentData.sections" class="departments-tab"
-            [class.active]="selectedTab === department.id" (click)="onTabChange(department.id)">
+            [class.active]="selectedTab === department.slug" (click)="onTabChange(department.slug || department.id)">
             {{ department.name }}
           </button>
         </div>
 
         <div class="departments-tabpanels">
           <div *ngFor="let department of departmentData.sections" class="departments-tabpanel"
-            [class.active]="selectedTab === department.id">
+            [class.active]="selectedTab === department.slug">
             <div class="department-content-wrapper">
 
               <!-- Department Header -->
               <div class="row">
                 <div class="col-lg-8 col-md-12">
                   <h2 class="department-title">{{ department.pageTitle }}</h2>
-                  <p class="faculty-text">{{ department.about }}</p>
+                  <!-- ✅ النبذة باستخدام innerHTML + cleanHtml -->
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="department.about | cleanHtml">
+                  </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
                   <div class="department-stats">
@@ -52,20 +55,24 @@
               <div class="mission-card mb-4">
                 <div class="card-header">Department Mission</div>
                 <div class="card-body">
-                  <p class="faculty-text">{{ department.mission }}</p>
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="department.mission | cleanHtml">
+                  </div>
                 </div>
               </div>
 
               <!-- Vision -->
-              <!-- <div class="mission-card mb-4">
+              <div class="mission-card mb-4" *ngIf="department.vision">
                 <div class="card-header">Department Vision</div>
                 <div class="card-body">
-                  <p class="faculty-text">{{ department.vision }}</p>
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="department.vision | cleanHtml">
+                  </div>
                 </div>
-              </div> -->
+              </div>
 
               <!-- Objectives -->
-              <!-- <div class="objectives-card mb-4" *ngIf="department.goals">
+              <div class="objectives-card mb-4" *ngIf="department.goals">
                 <div class="card-header">Educational Objectives</div>
                 <div class="card-body">
                   <ul class="objectives-list">
@@ -75,14 +82,16 @@
                     </li>
                   </ul>
                 </div>
-              </div> -->
+              </div>
 
               <!-- Details (Courses etc.) -->
               <div class="courses-card mb-4" *ngIf="department.details?.length">
                 <div class="card-header">Core Courses</div>
                 <div class="card-body">
                   <div *ngFor="let detail of department.details">
-                    <p class="faculty-text">{{ detail.content }}</p>
+                    <div class="faculty-text quill-content description"
+                         [innerHTML]="detail.content | cleanHtml">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -106,7 +115,9 @@
                 <div class="card-body">
                   <div *ngFor="let service of department.services">
                     <h4 class="faculty-text">{{ service.name }}</h4>
-                    <p class="faculty-text">{{ service.details }}</p>
+                    <div class="faculty-text quill-content description"
+                         [innerHTML]="service.details | cleanHtml">
+                    </div>
                     <small class="faculty-text">Duration: {{ service.duration }}</small>
                   </div>
                 </div>

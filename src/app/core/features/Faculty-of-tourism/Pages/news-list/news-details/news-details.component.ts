@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NewsService } from '../../../Services/news.service';
 import { NewsPost } from '../../../model/news.model';
+import { CleanHtmlPipe } from '../../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
+
 
 @Component({
   selector: 'app-news-details',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CleanHtmlPipe],
   templateUrl: './news-details.component.html',
   styleUrls: ['./news-details.component.css']
 })
@@ -58,7 +60,7 @@ export class NewsDetailsComponent implements OnInit {
 
   formatDate(dateStr: string): string {
     const date = new Date(dateStr);
-    return new Intl.DateTimeFormat('ar-EG', {
+    return new Intl.DateTimeFormat('EN-EG', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'

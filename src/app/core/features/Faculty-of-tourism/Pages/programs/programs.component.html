@@ -30,7 +30,10 @@
               <div class="row">
                 <div class="col-lg-8 col-md-12">
                   <h2 class="department-title">{{ program.pageTitle }}</h2>
-                  <p class="faculty-text">{{ program.about }}</p>
+                  <!-- ✅ النبذة باستخدام innerHTML + cleanHtml -->
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="program.about | cleanHtml">
+                  </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
                   <div class="department-stats">
@@ -51,7 +54,9 @@
               <div class="mission-card mb-4">
                 <div class="card-header">Program Mission</div>
                 <div class="card-body">
-                  <p class="faculty-text">{{ program.mission }}</p>
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="program.mission | cleanHtml">
+                  </div>
                 </div>
               </div>
 
@@ -59,9 +64,9 @@
               <div class="mission-card mb-4">
                 <div class="card-header">Program Vision</div>
                 <div class="card-body">
-                  <p class="faculty-text">
-                    {{ program.vision && program.vision.trim() !== '' ? program.vision : 'No vision has been recorded for this program yet.' }}
-                  </p>
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="program.vision | cleanHtml">
+                  </div>
                 </div>
               </div>
 
@@ -83,7 +88,9 @@
                 <div class="card-header">Program Details</div>
                 <div class="card-body">
                   <div *ngFor="let detail of program.details">
-                    <p class="faculty-text">{{ detail.content }}</p>
+                    <div class="faculty-text quill-content description"
+                         [innerHTML]="detail.content | cleanHtml">
+                    </div>
                   </div>
                 </div>
               </div>

@@ -23,11 +23,17 @@ export class AboutTabsService {
 
         if (aboutUniversity) {
           sections.push({
-            id: 'vision-mission',
-            title: 'Vision & Mission',
-            content: `${aboutUniversity.vision}\n\n${aboutUniversity.mission}`,
-            additionalInfo: aboutUniversity.content,
-            slug: slugify('Vision & Mission') // ✅ generate slug
+            id: 'vision',
+            title: 'Vision',
+            content: aboutUniversity.vision,
+            slug: slugify('Vision')
+          });
+
+          sections.push({
+            id: 'mission',
+            title: 'Mission',
+            content: aboutUniversity.mission,
+            slug: slugify('Mission')
           });
 
           sections.push({
@@ -37,7 +43,7 @@ export class AboutTabsService {
               .filter((g: any) => g.goalName)
               .map((g: any) => `• ${g.goalName}`)
               .join('\n'),
-            slug: slugify('Faculty Goals') // ✅ generate slug
+            slug: slugify('Faculty Goals')
           });
 
           if (aboutUniversity.history) {

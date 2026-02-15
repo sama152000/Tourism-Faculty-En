@@ -44,9 +44,9 @@
             </a>
           </h3>
           
-          <p class="news-excerpt faculty-text">
+          <!-- <p class="news-excerpt faculty-text">
             {{ newsItem.content | slice:0:120 }}...
-          </p>
+          </p> -->
           
           <!-- News Meta -->
           <div class="news-meta">
@@ -57,7 +57,7 @@
           </div >
           
           <a  (click)="navigateToPost(newsItem.slug || newsItem.id)"
-            [routerLink]="['/news', newsItem.slug || newsItem.id]"
+            [routerLink]="['/news', newsItem.slug ]"
 
             class="read-more-btn faculty-btn faculty-btn-outline mt-auto"
           >
