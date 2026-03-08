@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmentTabsService } from '../../Services/department-tabs.service';
 import { DepartmentTabsData, Department } from '../../model/departments.model';
 import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
@@ -14,11 +14,7 @@ import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ است
   styleUrls: ['./departments.component.css']
 })
 export class DepartmentsComponent implements OnInit {
-  departmentData: DepartmentTabsData = {
-    title: '',
-    subtitle: '',
-    sections: []
-  };
+  departmentData!: DepartmentTabsData;
   selectedTab: string = '';
 
   constructor(
@@ -28,43 +24,31 @@ export class DepartmentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Get initial tab from route params first
+    const initialSlug = this.route.snapshot.paramMap.get('slug');
+    
     this.departmentTabsService.getDepartmentTabsData().subscribe(data => {
       this.departmentData = data;
 
-      // First check queryParams for tab selection
-      this.route.queryParams.subscribe(qparams => {
-        const tabParam = qparams['tab'];
-        if (tabParam && data.sections.some(s => s.slug === tabParam)) {
-          this.selectedTab = tabParam;
-        } else if (data.sections.length) {
-          this.selectedTab = data.sections[0].slug || data.sections[0].id;
-        }
-      });
+      // Set selectedTab based on route param or default to first section
+      if (initialSlug) {
+        this.selectedTab = initialSlug;
+      } else if (data.sections.length) {
+        this.selectedTab = data.sections[0].slug!;
+      }
 
-      // Also check route params
-      this.route.params.subscribe((params: Params) => {
-        const id = params['id'];
-        if (id) {
-          // Check if it's a slug or id
-          if (data.sections.some(s => s.slug === id)) {
-            this.selectedTab = id;
-          } else if (data.sections.some(s => s.id === id)) {
-            this.selectedTab = id;
-          }
+      // Subscribe to route params for changes
+      this.route.params.subscribe(params => {
+        if (params['slug'] && params['slug'] !== this.selectedTab) {
+          this.selectedTab = params['slug'];
         }
       });
     });
   }
 
-  onTabChange(id: string): void {
-    this.selectedTab = id;
-
-    // Update URL without reloading
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { tab: this.selectedTab },
-      queryParamsHandling: 'merge'
-    });
+  onTabChange(slug: string): void {
+    this.selectedTab = slug;
+    this.router.navigate(['/departments', slug]);
   }
 
   getFacultyCount(department: Department): number {

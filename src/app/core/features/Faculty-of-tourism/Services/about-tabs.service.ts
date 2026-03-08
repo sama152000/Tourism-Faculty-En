@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { AboutTabsData, AboutSection } from '../model/about-faculty.model';
 import { map, forkJoin, Observable } from 'rxjs';
-import { slugify } from '../../../../utilities/slug.util'; // ✅ slugify function
 
 @Injectable({
   providedIn: 'root'
@@ -26,14 +25,14 @@ export class AboutTabsService {
             id: 'vision',
             title: 'Vision',
             content: aboutUniversity.vision,
-            slug: slugify('Vision')
+            slug: 'vision'
           });
 
           sections.push({
             id: 'mission',
             title: 'Mission',
             content: aboutUniversity.mission,
-            slug: slugify('Mission')
+            slug: 'mission'
           });
 
           sections.push({
@@ -43,7 +42,7 @@ export class AboutTabsService {
               .filter((g: any) => g.goalName)
               .map((g: any) => `• ${g.goalName}`)
               .join('\n'),
-            slug: slugify('Faculty Goals')
+            slug: 'goals'
           });
 
           if (aboutUniversity.history) {
@@ -51,7 +50,7 @@ export class AboutTabsService {
               id: 'history',
               title: 'Faculty History',
               content: aboutUniversity.history,
-              slug: slugify('Faculty History') // ✅ generate slug
+              slug: 'history'
             });
           }
         }
@@ -60,17 +59,17 @@ export class AboutTabsService {
         if (deanSpeech) {
           sections.push({
             id: 'dean-word',
-            title: "Dean's Message",
+            title: 'Dean\'s Message',
             content: deanSpeech.speech,
             additionalInfo: `${deanSpeech.memberName} - ${deanSpeech.memberPosition}`,
             image: deanSpeech.deanSpeechAttachments?.[0]?.url,
-            slug: slugify("Dean's Message") // ✅ generate slug
+            slug: 'dean-word'
           });
         }
 
         return {
-          title: 'About Faculty of Tourism & Hotels',
-          subtitle: 'Learn more about our faculty through the following sections',
+          title: 'About the Faculty of Tourism and Hotels',
+          subtitle: 'Learn more about our faculty through the following comprehensive sections',
           sections,
           aboutInfo: {
             title: 'About the Faculty',

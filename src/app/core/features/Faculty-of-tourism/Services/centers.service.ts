@@ -22,7 +22,7 @@ export class CentersService {
           ...center,
           details: detailsRes.data.filter((d: any) => d.centerId === center.id),
           members: membersRes.data.filter((m: any) => m.centerId === center.id),
-          slug: slugify(center.centerName) // ✅ generate slug from English or Arabic name
+          slug: center.slug // ✅ استخدام الـ slug من الـ backend مباشرة
         }));
 
         return {

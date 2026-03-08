@@ -5,9 +5,9 @@
     <div class="news-header d-flex justify-between align-center mb-4">
       <h2 class="faculty-title slide-in">Latest News</h2>
       <a
-       routerLink="/news-list"
-       class="view-all-btn faculty-btn faculty-btn-primary"
-     >
+        routerLink="/news-list"
+        class="view-all-btn faculty-btn faculty-btn-primary"
+      >
         <i class="pi pi-list mr-2"></i>
         View All News
       </a>
@@ -39,7 +39,7 @@
         <!-- News Content -->
         <div class="news-content faculty-card-body">
           <h3 class="news-title">
-            <a [routerLink]="['/news', newsItem.slug||newsItem.id]" class="news-link">
+            <a [routerLink]="['/news', newsItem.slug]" class="news-link">
               {{ newsItem.title }}
             </a>
           </h3>
@@ -56,9 +56,8 @@
             </span>
           </div >
           
-          <a  (click)="navigateToPost(newsItem.slug || newsItem.id)"
-            [routerLink]="['/news', newsItem.slug ]"
-
+          <a  (click)="navigateToPost(newsItem.slug || '')"
+            [routerLink]="['/news', newsItem.slug]"
             class="read-more-btn faculty-btn faculty-btn-outline mt-auto"
           >
             Read More

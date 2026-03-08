@@ -26,7 +26,7 @@ export class DepartmentTabsService {
           members: membersRes.data.filter((m: any) => m.departmentId === dept.id),
           programs: programsRes.data.filter((p: any) => p.departmentId === dept.id),
           services: servicesRes.data.filter((s: any) => s.departmentId === dept.id),
-          slug: slugify(dept.name) // ✅ generate slug from English or Arabic name
+          slug: dept.slug // ✅ استخدام الـ slug من الـ backend مباشرة
         }));
 
         return {

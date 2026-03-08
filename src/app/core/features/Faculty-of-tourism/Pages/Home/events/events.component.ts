@@ -20,18 +20,8 @@ export class EventsComponent implements OnInit {
   constructor(private newsService: NewsService) {}
 
   ngOnInit(): void {
-    this.newsService.getNews().subscribe(posts => {
-      // فلترة الأحداث فقط (case-insensitive)
-      const eventsOnly = posts.filter(p =>
-        p.postCategories.some(c => c.categoryName.toLowerCase().includes('event'))
-      );
-
-      // ترتيب حسب التاريخ (الأحدث أولاً)
-      const sorted = [...eventsOnly].sort(
-        (a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
-      );
-
-      this.eventsPosts = sorted.slice(0, this.limit);
+    this.newsService.getLatestEvents(this.limit).subscribe(posts => {
+      this.eventsPosts = posts;
     });
   }
 
@@ -50,7 +40,7 @@ export class EventsComponent implements OnInit {
     const diffTime = eventDate.getTime() - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-    if (diffDays < 0) return 'Event Ended';
+    if (diffDays < 0) return 'Event has ended';
     if (diffDays === 0) return 'Today';
     if (diffDays === 1) return 'Tomorrow';
     if (diffDays <= 7) return `In ${diffDays} days`;
@@ -60,5 +50,13 @@ export class EventsComponent implements OnInit {
 
   getEventDate(event: NewsPost): string {
     return event.publishedDate || event.createdDate;
+  }
+
+  handleMissingSlug(event?: Event): void {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    console.warn('Event has no slug; cannot navigate to details.');
   }
 }

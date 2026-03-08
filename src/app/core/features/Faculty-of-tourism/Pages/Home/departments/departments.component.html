@@ -24,8 +24,7 @@
           />
           <div class="image-overlay">
             <a 
-              [routerLink]="['/departments']"
-              [queryParams]="{ tab: department.slug }"
+              [routerLink]="['/departments', department.slug]"
               class="explore-btn faculty-btn faculty-btn-secondary"
             >
               <i class="pi pi-eye"></i>
@@ -48,8 +47,7 @@
           </div>
            -->
           <a
-            [routerLink]="['/departments']"
-            [queryParams]="{ tab: department.slug }"
+            [routerLink]="['/departments', department.slug]"
             class="learn-more-btn faculty-btn faculty-btn-outline mt-auto"
           >
             Learn more

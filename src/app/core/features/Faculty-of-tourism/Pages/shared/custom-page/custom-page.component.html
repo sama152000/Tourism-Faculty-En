@@ -1,0 +1,137 @@
+<section class="faculty-section">
+  <div class="faculty-container">
+    
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="text-center mb-5">
+      <div class="loading-spinner">
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem; color: var(--primary-color);"></i>
+        <p class="faculty-text mt-3">Loading page content...</p>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="hasError && !isLoading" class="text-center mb-5">
+      <div class="error-message">
+        <i class="pi pi-exclamation-triangle" style="font-size: 2rem; color: var(--danger-color);"></i>
+        <p class="faculty-text mt-3 text-danger">Error loading page</p>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <div *ngIf="currentPage && !isLoading" class="page-content">
+      
+      <!-- Header Section -->
+      <div class="text-center mb-5">
+        <h1 class="faculty-title">{{ currentPage.subTitle }}</h1>
+      </div>
+
+      <!-- Featured Image Section -->
+      <!-- <div *ngIf="currentPage.featuredImagePath" class="featured-image-section mb-5">
+        <div class="featured-image-container">
+          <img 
+            [src]="currentPage.featuredImagePath" 
+            [alt]="currentPage.subTitle"
+            class="featured-image img-responsive"
+          >
+        </div>
+      </div> -->
+
+      <!-- Main Content Section -->
+      <div class="about-tabs-container">
+        <div class="custom-tabs">
+          
+          <!-- Tab Content (Single Tab for Dynamic Content) -->
+          <div class="tab-content">
+            <div class="tab-panel active">
+              <div class="tab-content-wrapper">
+                <div class="row align-items-center">
+                  <!-- Content Column -->
+                  <div class="col-lg-12 col-md-12">
+                    <div class="content-section">
+                      <h2 class="section-title">{{ currentPage.subTitle }}</h2>
+
+                      <!-- Main Content -->
+                      <div class="content-text quill-content description"
+                           [innerHTML]="currentPage.content | cleanHtml">
+                      </div>
+
+                      <!-- Page Status Info -->
+                      <!-- <div *ngIf="currentPage.status || currentPage.publishedDate" class="additional-info">
+                        <div class="info-card">
+                          <i class="pi pi-info-circle info-icon"></i>
+                          <div class="info-content">
+                            <p class="faculty-text-light" *ngIf="currentPage.status">
+                              <strong>Status:</strong> {{ currentPage.status }}
+                            </p>
+                            <p class="faculty-text-light" *ngIf="currentPage.publishedDate">
+                              <strong>Published:</strong> {{ currentPage.publishedDate | date:'medium' }}
+                            </p>
+                          </div>
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Attachments Section -->
+      <div *ngIf="currentPage.pageAttachments && currentPage.pageAttachments.length > 0" class="attachments-section mt-5">
+        <div class="about-tabs-container">
+          <div class="custom-tabs">
+            <div class="tab-content">
+              <div class="tab-panel active">
+                <div class="tab-content-wrapper">
+                  <div class="content-section">
+                    <h2 class="section-title">
+                      <i class="pi pi-paperclip mr-2"></i>
+                      Attachments
+                    </h2>
+                    
+                    <div class="attachments-grid">
+                      <div 
+                        *ngFor="let attachment of currentPage.pageAttachments" 
+                        class="attachment-item"
+                      >
+                        <div class="attachment-card">
+                          <div class="attachment-icon">
+                            <i class="pi pi-file"></i>
+                          </div>
+                          <div class="attachment-info">
+                            <h4 class="attachment-name">{{ attachment.fileName }}</h4>
+                            <!-- <p class="attachment-details">
+                              <span class="attachment-folder">{{ attachment.folderName }}</span>
+                              <span class="attachment-status" 
+                                    [class.public]="attachment.isPublic"
+                                    [class.private]="!attachment.isPublic">
+                                {{ attachment.isPublic ? 'Public' : 'Private' }}
+                              </span>
+                            </p> -->
+                          </div>
+                          <div class="attachment-actions">
+                            <button 
+                              class="faculty-btn faculty-btn-primary attachment-download-btn"
+                              (click)="downloadAttachment(attachment)"
+                              [disabled]="!attachment.isPublic"
+                            >
+                              <i class="pi pi-download mr-1"></i>
+                              Download
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

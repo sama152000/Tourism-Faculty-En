@@ -1,16 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewsService } from '../../../Services/news.service';
-import { NewsPost } from '../../../model/news.model';
+import { NewsPost, } from '../../../model/news.model';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { RouterLink, Router } from "@angular/router";
+import { RouterLink,Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-news',
   standalone: true,
   imports: [CommonModule, CardModule, ButtonModule, RouterLink],
-  templateUrl: './news.component.html',
+  templateUrl:'./news.component.html',
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent implements OnInit {
@@ -18,33 +19,30 @@ export class NewsComponent implements OnInit {
   newsData: { news: NewsPost[] } = { news: [] };
   @Input() limit: number = 3; // default limit for home page
 
-  constructor(private newsService: NewsService, private router: Router) {}
+  constructor(private newsService: NewsService,private router:Router) {}
 
   ngOnInit(): void {
-    this.newsService.getNews().subscribe(posts => {
-      // ✅ filter only "News" category (English)
-      const newsOnly = posts.filter(p =>
-        p.postCategories.some(c => c.categoryName === 'News')
-      );
-      this.newsPosts = newsOnly.slice(0, this.limit);
+    this.newsService.getLatestNews(this.limit).subscribe(posts => {
+      this.newsPosts = posts;
       this.newsData.news = this.newsPosts;
     });
   }
 
+  
   formatDate(dateStr: string): string {
     const date = new Date(dateStr);
-    return new Intl.DateTimeFormat('en-US', { // ✅ English locale
+    return new Intl.DateTimeFormat('en-EG', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     }).format(date);
   }
-
-  goToPost(post: NewsPost): void {
+   goToPost(post: NewsPost): void {
     if (!post.slug) {
       this.handleMissingSlug();
       return;
     }
+
     this.router.navigate(['/news', post.slug]);
   }
 
@@ -53,6 +51,8 @@ export class NewsComponent implements OnInit {
       event.preventDefault();
       event.stopPropagation();
     }
+    // Simple user feedback for now
+    // You can replace with a toast service if available
     console.warn('Post has no slug; cannot navigate to details.');
   }
 

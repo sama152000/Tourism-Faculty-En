@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { Program, ProgramsTabsData } from '../model/program.model';
 import { forkJoin, map, Observable } from 'rxjs';
-import { slugify } from '../../../../utilities/slug.util'; // ✅ slugify function
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +21,7 @@ export class ProgramsService {
           ...prog,
           details: detailsRes.data.filter((d: any) => d.programId === prog.id),
           members: membersRes.data.filter((m: any) => m.programId === prog.id),
-          slug: slugify(prog.pageTitleEn || prog.pageTitle) // ✅ generate slug from English or Arabic title
+          slug: prog.slug // ✅ استخدام الـ slug من الـ backend مباشرة
         }));
 
         return {
