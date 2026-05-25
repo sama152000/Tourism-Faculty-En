@@ -15,7 +15,7 @@ import { RouterLink } from '@angular/router';
 })
 export class EventsComponent implements OnInit {
   eventsPosts: NewsPost[] = [];
-  @Input() limit: number = 2; // default limit for home page
+  @Input() limit: number = 3; // default limit for home page
 
   constructor(private newsService: NewsService) {}
 

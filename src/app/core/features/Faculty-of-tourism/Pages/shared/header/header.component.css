@@ -128,17 +128,26 @@
   --p-menubar-submenu-background: var(--primary-color) !important;
   --p-menubar-submenu-border-color: transparent !important;
   --p-menubar-submenu-color: var(--white) !important;
+  /* reduce gap between nav items */
+  --p-menubar-item-gap: 0 !important;
 }
 
 .main-navigation :ng-deep .p-menuitem-link {
   color: var(--white) !important;
   background-color: transparent !important; /* use submenu host background */
-  padding: 10px 15px;
+  padding: 8px 10px;
   font-weight: 500;
   border-radius: var(--border-radius);
   transition: all 0.3s ease;
 }
 
+
+.faculty-containerr {
+  width: 100%;
+  max-width: 1750px;
+  margin: 0 auto;
+  padding: var(--container-padding);
+}
 .main-navigation :ng-deep .p-menuitem-link:hover {
   background-color: rgba(255, 204, 0, 0.1) !important;
   color: var(--secondary-color) !important;

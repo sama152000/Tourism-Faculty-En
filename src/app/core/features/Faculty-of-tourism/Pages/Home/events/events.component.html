@@ -4,38 +4,50 @@
     <!-- Section Header -->
     <div class="events-header d-flex justify-between align-center mb-4">
       <h2 class="faculty-title slide-in">Events & Activities</h2>
-      <a
-       routerLink="/news-list"
-       [queryParams]="{ category: 'Events' }"
-       class="view-all-btn faculty-btn faculty-btn-secondary"
-     >
+      <a 
+        routerLink="/news-list"
+        [queryParams]="{ category: 'Event' }"
+        class="view-all-btn faculty-btn faculty-btn-secondary"
+      >
         <i class="pi pi-calendar mr-2"></i>
         View All Events
       </a>
     </div>
 
     <!-- Events Grid -->
-    <div class="events-grid faculty-grid faculty-grid-2">
-      <div *ngFor="let event of eventsPosts; let i = index"
-           class="event-card faculty-card fade-in"
-           [style.animation-delay]="(i * 0.15) + 's'">
+    <div class="events-grid faculty-grid faculty-grid-3">
+      <div 
+        *ngFor="let event of eventsPosts; let i = index"
+        class="event-card faculty-card fade-in"
+        [style.animation-delay]="(i * 0.15) + 's'"
+      >
         
         <!-- Event Image -->
         <div class="event-image-wrapper">
-          <img [src]="event.featuredImagePath"
-               [alt]="event.title"
-               class="event-image" />
+          <img 
+            [src]="event.featuredImagePath"
+            [alt]="event.title"
+            class="event-image"
+          />
           
+          <!-- Date Badge -->
+        
           <!-- Status Badge -->
           <div class="event-status-badge">
-            {{ getTimeUntilEvent(getEventDate(event)) }}
+            {{ getTimeUntilEvent(event.createdDate) }}
           </div>
+
+          <!-- Views Badge -->
+          <span class="views-badge">
+            <i class="pi pi-eye"></i>
+            {{ event.totalViewCount }}
+          </span>
         </div>
 
         <!-- Event Content -->
         <div class="event-content faculty-card-body">
           <h3 class="event-title">
-            <a [routerLink]="['/news', event.slug]" class="event-link">
+            <a [routerLink]="['/news', event.id]" class="event-link">
               {{ event.title }}
             </a>
           </h3>
@@ -48,19 +60,21 @@
           <div class="event-meta">
             <div class="event-date-info">
               <i class="pi pi-calendar"></i>
-              <span>{{ formatDate(getEventDate(event)) }}</span>
+              <span>{{ formatDate(event.createdDate) }}</span>
             </div>
             <div class="event-time-info">
               <i class="pi pi-clock"></i>
-              <span>{{ getTimeUntilEvent(getEventDate(event)) }}</span>
+              <span>{{ getTimeUntilEvent(event.createdDate) }}</span>
             </div>
           </div>
           
           <!-- Event Actions -->
           <div class="event-actions">
-            <a [routerLink]="['/news', event.slug]"
-               class="details-btn faculty-btn faculty-btn-primary">
-              Event Details
+            <a
+              [routerLink]="['/news', event.id]"
+              class="details-btn faculty-btn faculty-btn-primary"
+            >
+              View Details
               <i class="pi pi-info-circle mr-2"></i>
             </a>
           </div>

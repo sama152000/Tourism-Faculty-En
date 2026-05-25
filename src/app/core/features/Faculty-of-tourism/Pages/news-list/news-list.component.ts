@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NewsService } from '../../Services/news.service';
-import { CategoriesService } from '../../Services/categories.service';
-import { NewsTabsData, NewsPost, NewsCategory } from '../../model/news.model';
+import { NewsPost } from '../../model/news.model';
 import { Category } from '../../model/category.model';
-import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ Import Pipe
+import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe';
 
 @Component({
   selector: 'app-news-list',
@@ -16,34 +15,35 @@ import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ Import
   styleUrls: ['./news-list.component.css']
 })
 export class NewsListComponent implements OnInit {
-  newsData!: NewsTabsData;
-  selectedCategory: string = 'All';
+
+  // Data
+  posts: NewsPost[] = [];
   categories: Category[] = [];
-  servicesCategoryId: string | null = null;
-  isFilteredByServices: boolean = false;
-  
-  // Search and filter properties
+
+  // Filter state
   searchQuery: string = '';
-  selectedDropdownCategory: string = 'All';
-  allPosts: NewsPost[] = [];
-  
-  // Custom dropdown properties
+  selectedCategoryId: string = '';
+  selectedCategoryName: string = 'all';
+  selectedType: string = '';
+
+  // Dropdown
   isDropdownOpen: boolean = false;
-  
-  // Pagination properties
+
+  // Pagination
   currentPage: number = 1;
-  itemsPerPage: number = 9;
-  totalItems: number = 0;
-  totalPages: number = 0;
+  pageSize: number =9;
+  totalCount: number = 0;
+
+  // Loading / error
+  isLoading: boolean = false;
+  hasError: boolean = false;
 
   constructor(
     private newsService: NewsService,
-    private categoriesService: CategoriesService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
-  // Close dropdown when clicking outside
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -53,257 +53,153 @@ export class NewsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // First, fetch categories to find the services category
-    this.categoriesService.getCategories().subscribe(categories => {
-      this.categories = categories;
-      
-      // Find the services category (supports both Arabic and English)
-      const servicesCategory = categories.find(cat => 
-        cat.name.toLowerCase().includes('service') || 
-        cat.name.includes('Services')
-      );
-      
-      if (servicesCategory) {
-        this.servicesCategoryId = servicesCategory.id;
+    // Load categories first, then read query params and load posts
+    this.newsService.getCategories().subscribe({
+      next: cats => {
+        this.categories = cats;
+        this.route.queryParams.subscribe(params => {
+          this.searchQuery = params['search'] ?? '';
+          const catId = params['categoryId'] ?? '';
+          const catName = params['category'] ?? 'all';
+          this.selectedCategoryId = catId;
+          this.selectedCategoryName = catId
+            ? (cats.find(c => c.id === catId)?.name ?? catName)
+            : 'all';
+          this.selectedType = params['type'] ?? '';
+          this.currentPage = params['page'] ? +params['page'] : 1;
+          this.loadPosts();
+        });
+      },
+      error: () => {
+        // Still load posts even if categories fail
+        this.loadPosts();
       }
-      
-      // Now fetch news data
-      this.loadNewsData();
     });
   }
 
-  // Get all category names from backend
-  getAllCategoryNames(): string[] {
-    return this.categories.map(cat => cat.name);
-  }
+  loadPosts(): void {
+    this.isLoading = true;
+    this.hasError = false;
 
-  loadNewsData(): void {
-    this.newsService.getNewsTabsData().subscribe(data => {
-      // Store all posts for filtering
-      this.allPosts = data.sections.flatMap(s => s.posts);
-      
-      // Initialize pagination
-      this.totalItems = this.allPosts.length;
-      this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
-      
-      // Add 'All' section at the beginning with all posts
-      this.newsData = {
-        title: data.title,
-        subtitle: data.subtitle,
-        sections: [{ categoryName: 'All', posts: this.allPosts }, ...data.sections]
-      };
-
-      this.route.queryParams.subscribe(params => {
-        if (params['category']) {
-          this.selectedCategory = params['category'];
-          this.selectedDropdownCategory = params['category'];
-        }
-      });
-    });
-  }
-
-  // Handle category dropdown change
-  onCategoryChange(categoryName: string): void {
-    this.selectedDropdownCategory = categoryName;
-    this.selectedCategory = categoryName;
-    this.searchQuery = '';
-    
-    if (categoryName === 'All') {
-      this.isFilteredByServices = false;
-      this.newsData = {
-        ...this.newsData,
-        sections: [{ categoryName: 'All', posts: this.allPosts }]
-      };
-    } else {
-      this.isFilteredByServices = false;
-      const categoryPosts = this.allPosts.filter(post =>
-        post.postCategories.some(cat => cat.categoryName === categoryName)
-      );
-      this.newsData = {
-        ...this.newsData,
-        sections: [{ categoryName: categoryName, posts: categoryPosts }]
-      };
+    const filter: any = {};
+    if (this.selectedCategoryId) {
+      filter.categoryId = this.selectedCategoryId;
     }
-    
-    this.updatePagination();
-    
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { category: categoryName === 'All' ? null : categoryName },
-      queryParamsHandling: 'merge'
+    if (this.searchQuery.trim()) {
+      filter.title = this.searchQuery.trim();
+    }
+    if (this.selectedType !== '') {
+      filter.type = this.selectedType;
+    }
+
+    this.newsService.getPagedNews(this.currentPage, this.pageSize, filter).subscribe({
+      next: result => {
+        this.posts = result.items;
+        this.totalCount = result.totalCount;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.hasError = true;
+        this.isLoading = false;
+      }
     });
   }
+
+  // ── Filter actions ──────────────────────────────────────────────
 
   onSearch(): void {
-    if (!this.searchQuery.trim()) {
-      this.onCategoryChange(this.selectedDropdownCategory);
-      return;
-    }
-    this.performSearch();
-  }
-
-  // Real-time search as you type
-  onSearchInput(): void {
-    if (!this.searchQuery.trim()) {
-      this.onCategoryChange(this.selectedDropdownCategory);
-      return;
-    }
-    this.performSearch();
-  }
-
-  private performSearch(): void {
-    const query = this.searchQuery.toLowerCase();
-    let filteredPosts: NewsPost[];
-    const searchCategory = this.selectedDropdownCategory === 'All' ? 'Search Results' : this.selectedDropdownCategory;
-    
-    if (this.selectedDropdownCategory === 'All') {
-      filteredPosts = this.allPosts.filter(post =>
-        (post.title && post.title.toLowerCase().includes(query)) ||
-        (post.content && post.content.toLowerCase().includes(query))
-      );
-    } else if (this.selectedDropdownCategory === 'Services' && this.servicesCategoryId) {
-      filteredPosts = this.allPosts.filter(post =>
-        post.postCategories.some(cat => cat.categoryId === this.servicesCategoryId) &&
-        ((post.title && post.title.toLowerCase().includes(query)) || (post.content && post.content.toLowerCase().includes(query)))
-      );
-    } else {
-      filteredPosts = this.allPosts.filter(post =>
-        post.postCategories.some(cat => cat.categoryName === this.selectedDropdownCategory) &&
-        ((post.title && post.title.toLowerCase().includes(query)) || (post.content && post.content.toLowerCase().includes(query)))
-      );
-    }
-    
-    // Update selectedCategory to match the search results section
-    this.selectedCategory = searchCategory;
-    
-    this.newsData = {
-      ...this.newsData,
-      sections: [{ 
-        categoryName: searchCategory, 
-        posts: filteredPosts 
-      }]
-    };
-    
-    this.totalItems = filteredPosts.length;
-    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
     this.currentPage = 1;
+    this.updateUrlAndLoad();
   }
 
-  // Show all news
-  showAllNews(): void {
-    this.selectedDropdownCategory = 'All';
-    this.selectedCategory = 'All';
+  clearSearch(): void {
     this.searchQuery = '';
-    this.isFilteredByServices = false;
+    this.currentPage = 1;
+    this.updateUrlAndLoad();
+  }
+
+  selectCategory(cat: Category | null): void {
+    this.selectedCategoryId = cat ? cat.id : '';
+    this.selectedCategoryName = cat ? cat.name : 'all';
     this.isDropdownOpen = false;
-    
-    this.newsData = {
-      ...this.newsData,
-      sections: [{ categoryName: 'All', posts: this.allPosts }]
-    };
-    
-    this.updatePagination();
-    
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { category: null },
-      queryParamsHandling: 'merge'
-    });
+    this.currentPage = 1;
+    this.updateUrlAndLoad();
+  }
+
+  showAllNews(): void {
+    this.selectCategory(null);
   }
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  selectCategory(categoryName: string): void {
-    this.selectedDropdownCategory = categoryName;
-    this.isDropdownOpen = false;
-    this.onCategoryChange(categoryName);
+  // ── Pagination ──────────────────────────────────────────────────
+
+  get totalPages(): number {
+    return Math.ceil(this.totalCount / this.pageSize);
   }
 
-  onTabChange(categoryName: string): void {
-    this.onCategoryChange(categoryName);
-  }
-
-  formatDate(dateStr: string): string {
-    const date = new Date(dateStr);
-    return new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    }).format(date);
-  }
-
-  getPostCategories(post: NewsPost): string {
-    if (post.postCategories && post.postCategories.length > 0) {
-      return post.postCategories.map(cat => cat.categoryName).join(', ');
+  get pages(): number[] {
+    const maxVisible = 5;
+    let start = Math.max(1, this.currentPage - Math.floor(maxVisible / 2));
+    let end = Math.min(this.totalPages, start + maxVisible - 1);
+    if (end - start < maxVisible - 1) {
+      start = Math.max(1, end - maxVisible + 1);
     }
-    return '';
+    const result: number[] = [];
+    for (let i = start; i <= end; i++) result.push(i);
+    return result;
   }
 
-  get selectedPosts(): NewsPost[] {
-    const section = this.newsData.sections.find(s => s.categoryName === this.selectedCategory);
-    return section ? section.posts : [];
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages || page === this.currentPage) return;
+    this.currentPage = page;
+    this.updateUrlAndLoad();
+    this.scrollToTop();
   }
+
+  nextPage(): void { this.goToPage(this.currentPage + 1); }
+  prevPage(): void { this.goToPage(this.currentPage - 1); }
+
+  // ── Navigation ──────────────────────────────────────────────────
 
   goToPost(post: NewsPost): void {
-    this.router.navigate(['/news', post.slug]); 
+    this.router.navigate(['/news', post.id]);
   }
-  
-  get paginatedPosts(): NewsPost[] {
-    const posts = this.selectedPosts;
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return posts.slice(startIndex, startIndex + this.itemsPerPage);
+
+  // ── Helpers ─────────────────────────────────────────────────────
+
+  getPostCategories(post: NewsPost): string {
+    return post.postCategories?.map(c => c.categoryName).join(', ') ?? '';
   }
-  
-  get pages(): number[] {
-    const pages: number[] = [];
-    const maxVisiblePages = 5;
-    let startPage = Math.max(1, this.currentPage - Math.floor(maxVisiblePages / 2));
-    let endPage = Math.min(this.totalPages, startPage + maxVisiblePages - 1);
-    
-    if (endPage - startPage < maxVisiblePages - 1) {
-      startPage = Math.max(1, endPage - maxVisiblePages + 1);
-    }
-    
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(i);
-    }
-    return pages;
+
+  formatDate(dateStr: string | null): string {
+    if (!dateStr) return '';
+    return new Intl.DateTimeFormat('en-EG', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    }).format(new Date(dateStr));
   }
-  
-  goToPage(page: number): void {
-    if (page >= 1 && page <= this.totalPages && page !== this.currentPage) {
-      this.currentPage = page;
-      this.scrollToTop();
-    }
+
+  private updateUrlAndLoad(): void {
+    const queryParams: any = {};
+    if (this.selectedCategoryId) queryParams['categoryId'] = this.selectedCategoryId;
+    if (this.selectedCategoryName !== 'all') queryParams['category'] = this.selectedCategoryName;
+    if (this.searchQuery.trim()) queryParams['search'] = this.searchQuery.trim();
+    if (this.selectedType !== '') queryParams['type'] = this.selectedType;
+    if (this.currentPage > 1) queryParams['page'] = this.currentPage;
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams,
+      queryParamsHandling: 'replace'
+    });
+
+    this.loadPosts();
   }
-  
-  nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.scrollToTop();
-    }
-  }
-  
-  prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.scrollToTop();
-    }
-  }
-  
+
   private scrollToTop(): void {
-    const filterSection = document.querySelector('.news-filter-section');
-    if (filterSection) {
-      filterSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-  
-  // Update pagination when category changes
-  private updatePagination(): void {
-    this.totalItems = this.selectedPosts.length;
-    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
-    this.currentPage = 1;
+    const el = document.querySelector('.news-filter-section');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
